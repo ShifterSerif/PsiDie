@@ -1,19 +1,19 @@
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtils;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
+// import org.jfree.chart.ChartFactory;
+// import org.jfree.chart.ChartUtils;
+// import org.jfree.chart.JFreeChart;
+// import org.jfree.chart.plot.PlotOrientation;
+// import org.jfree.data.statistics.HistogramDataset;
+// import org.jfree.data.statistics.HistogramType;
 
-import java.io.File;
-import java.io.IOException;
+// import java.io.File;
+// import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import static java.lang.Math.round;
+// import static java.lang.Math.round;
 
 public class Psidie2 {
     static int result = 0;
@@ -107,7 +107,7 @@ public class Psidie2 {
 
 
 
-        createRollChart();
+        // createRollChart();
     }
 
     public static void testDice(){
@@ -252,18 +252,18 @@ public class Psidie2 {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-    public static void createRollChart(){
-        double[] valuesRolls = new double[rollsList.size()];
-        for (int i = 0; i < rollsList.size(); i++) {valuesRolls[i] = rollsList.get(i);}
-        int binny = (int)Math.round(Collections.max(rollsList));
-        HistogramDataset dataset = new HistogramDataset();
-        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-        dataset.addSeries("key", valuesRolls, binny);
+    // public static void createRollChart(){
+    //     double[] valuesRolls = new double[rollsList.size()];
+    //     for (int i = 0; i < rollsList.size(); i++) {valuesRolls[i] = rollsList.get(i);}
+    //     int binny = (int)Math.round(Collections.max(rollsList));
+    //     HistogramDataset dataset = new HistogramDataset();
+    //     dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+    //     dataset.addSeries("key", valuesRolls, binny);
 
-        JFreeChart histogram = ChartFactory.createHistogram("Psidie","Rolls","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
-        try {
-            ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.jpg"), histogram, 600, 400);
-        }catch(IOException ignored) {}
-    }
+    //     JFreeChart histogram = ChartFactory.createHistogram("Psidie","Rolls","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
+    //     try {
+    //         ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.jpg"), histogram, 600, 400);
+    //     }catch(IOException ignored) {}
+    // }
 
 }
