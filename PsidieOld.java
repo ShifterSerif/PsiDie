@@ -1,11 +1,11 @@
-// import org.jfree.chart.ChartFactory;
-// import org.jfree.chart.ChartUtils;
-// import org.jfree.chart.JFreeChart;
-// import org.jfree.chart.plot.PlotOrientation;
-// import org.jfree.data.statistics.HistogramDataset;
-// import org.jfree.data.statistics.HistogramType;
-// import java.io.File;
-// import java.io.IOException;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -127,10 +127,10 @@ public class PsidieOld {
         trimMedianPoints();
 
         //create chart for rolls
-        // createRollChart();
+        createRollChart();
 
         //create chart for points
-        // createPointChart();
+        createPointChart();
     }
 
     private static void trimMedianPoints() {
@@ -234,32 +234,32 @@ public class PsidieOld {
         System.out.println("Points Trimmed Lowest: " + lowest);
     }
 
-    // public static void createRollChart(){
-    //     double[] valuesRolls = new double[rollsList.size()];
-    //     for (int i = 0; i < rollsList.size(); i++) {valuesRolls[i] = rollsList.get(i);}
-    //     int binny = (int)Math.round(Collections.max(rollsList));
-    //     HistogramDataset dataset = new HistogramDataset();
-    //     dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-    //     dataset.addSeries("key", valuesRolls, binny);
+    public static void createRollChart(){
+        double[] valuesRolls = new double[rollsList.size()];
+        for (int i = 0; i < rollsList.size(); i++) {valuesRolls[i] = rollsList.get(i);}
+        int binny = (int)Math.round(Collections.max(rollsList));
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+        dataset.addSeries("key", valuesRolls, binny);
 
-    //     JFreeChart histogram = ChartFactory.createHistogram("Psidie","Rolls","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
-    //     try {
+        JFreeChart histogram = ChartFactory.createHistogram("Psidie","Rolls","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
+        try {
 
-    //         ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.png"), histogram, 600, 400);
-    //     }catch(IOException e) {}
-    // }
+            ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.png"), histogram, 600, 400);
+        }catch(IOException e) {}
+    }
 
-    // public static void createPointChart(){
-    //     double[] valuesPoints = new double[pointList.size()];
-    //     for (int i = 0; i < pointList.size(); i++) {valuesPoints[i] = pointList.get(i);}
-    //     int binny = (int)Math.round(Collections.max(pointList));
-    //     HistogramDataset dataset = new HistogramDataset();
-    //     dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-    //     dataset.addSeries("key", valuesPoints, binny);
+    public static void createPointChart(){
+        double[] valuesPoints = new double[pointList.size()];
+        for (int i = 0; i < pointList.size(); i++) {valuesPoints[i] = pointList.get(i);}
+        int binny = (int)Math.round(Collections.max(pointList));
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+        dataset.addSeries("key", valuesPoints, binny);
 
-    //     JFreeChart histogram = ChartFactory.createHistogram("Psidie","Points","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
-    //     try {
-    //         ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfPoints.png"), histogram, 600, 400);
-    //     }catch(IOException e) {}
-    // }
+        JFreeChart histogram = ChartFactory.createHistogram("Psidie","Points","Frequency",dataset, PlotOrientation.VERTICAL,false,false,false);
+        try {
+            ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfPoints.png"), histogram, 600, 400);
+        }catch(IOException e) {}
+    }
 }
