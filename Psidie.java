@@ -61,10 +61,10 @@ public class Psidie {
         System.out.println("------Rolls List------");
         printListInfo(rollsList);
 
-       Collections.sort(pointList);
-       trimList(pointList, 5);
-       System.out.println("------Points List------");
-       printListInfo(pointList);
+        Collections.sort(pointList);
+        trimList(pointList, 5);
+        System.out.println("------Points List------");
+        printListInfo(pointList);
 
         if(include_d2){
             Collections.sort(d2List);
@@ -239,7 +239,7 @@ public class Psidie {
         System.out.println("Average: " + round(getListAverage(list),2));
     }
     public static void printListInfoDice(ArrayList<Integer> list){
-        System.out.println("Percentage: " + round((double)getListAverage(list)/getListAverage(rollsList)*100,2) + "%");
+        System.out.println("Percentage: " + round(getListAverage(list)/getListAverage(rollsList)*100,2) + "%");
         System.out.println("Median: " + getListMedian(list));
         System.out.println("Average: " + round(getListAverage(list),2));
     }
@@ -253,7 +253,7 @@ public class Psidie {
     public static void createRollChart(){
         double[] valuesRolls = new double[rollsList.size()];
         for (int i = 0; i < rollsList.size(); i++) {valuesRolls[i] = rollsList.get(i);}
-        int binny = (int)Math.round(Collections.max(rollsList));
+        int binny = Math.round(Collections.max(rollsList));
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         dataset.addSeries("key", valuesRolls, binny);
