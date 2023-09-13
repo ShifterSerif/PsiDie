@@ -4,7 +4,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
-
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -25,14 +24,14 @@ public class Psidie {
     static int attemptedTotal = 500000;
     static int pointsMade = 0;
     static double totalRolls= 0;
-    static double totald12 = 0;
-    static double totald10 = 0;
-    static double totald8 = 0;
-    static double totald6 = 0;
-    static double totald4 = 0;
-    static double totald2 = 0;
-    static double lowest = 0;
-    static double highest = 0;
+    static double total_d12 = 0;
+    static double total_d10 = 0;
+    static double total_d8 = 0;
+    static double total_d6 = 0;
+    static double total_d4 = 0;
+    static double total_d2 = 0;
+    static double lowestNumOfRolls = 0;
+    static double highestNumOfRolls = 0;
     static ArrayList<Integer> rollsList = new ArrayList<>();
     static ArrayList<Integer> pointList = new ArrayList<>();
     static ArrayList<Integer> d12List = new ArrayList<>();
@@ -43,8 +42,8 @@ public class Psidie {
     static ArrayList<Integer> d2List = new ArrayList<>();
     static double totalPoints = 0;
     static Random myRand = new Random();
-    public static int psidieOriginal = 6;
-    static int psidie = psidieOriginal;
+    public static int psiDieOriginal = 6;
+    static int psiDie = psiDieOriginal;
     static boolean include_d12 = false;
     static boolean include_d10 = false;
     static boolean include_d8 = false;
@@ -110,72 +109,72 @@ public class Psidie {
 
     public static void testDice(){
         for (int i = 0; i < attemptedTotal; i++) {
-            psidie = psidieOriginal;
+            psiDie = psiDieOriginal;
             do {
-                switch (psidie) {
+                switch (psiDie) {
                     case 12 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd12++;
                         }
-                        if (result == 6) psidie -= 2;
+                        if (result == 6) psiDie -= 2;
                     }
                     case 10 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd10++;
                         }
-                        if (result == 5 && include_d8) psidie -= 2;
-                        if (result == 1 && include_d12) psidie += 2;
+                        if (result == 5 && include_d8) psiDie -= 2;
+                        if (result == 1 && include_d12) psiDie += 2;
                     }
                     case 8 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd8++;
                         }
-                        if (result == 4 && include_d6) psidie -= 2;
-                        if (result == 1 && include_d10) psidie += 2;
+                        if (result == 4 && include_d6) psiDie -= 2;
+                        if (result == 1 && include_d10) psiDie += 2;
                     }
                     case 6 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd6++;
                         }
-                        if (result == 3 && include_d4) psidie -= 2;
-                        if (result == 1 && include_d8) psidie += 2;
+                        if (result == 3 && include_d4) psiDie -= 2;
+                        if (result == 1 && include_d8) psiDie += 2;
                     }
                     case 4 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd4++;
                         }
-                        if (result == 2 && include_d2) psidie = 2;
-                        else if (result == 2) psidie = 0;
-                        if (result == 1 && include_d6) psidie += 2;
+                        if (result == 2 && include_d2) psiDie = 2;
+                        else if (result == 2) psiDie = 0;
+                        if (result == 1 && include_d6) psiDie += 2;
                     }
                     case 2 -> {
                         {
-                            result = myRand.nextInt(psidie) + 1;
+                            result = myRand.nextInt(psiDie) + 1;
                             pointsMade += result;
                             numOfRolls++;
                             numOfd2++;
                         }
-                        if (result == 2) psidie = 0;
-                        if (result == 1 && include_d4) psidie += 2;
+                        if (result == 2) psiDie = 0;
+                        if (result == 1 && include_d4) psiDie += 2;
                     }
                     default -> System.out.println("Error " + i);
                 }
-            } while (psidie > 0);
+            } while (psiDie > 0);
             rollsList.add(numOfRolls);
             pointList.add(pointsMade);
             d12List.add(numOfd12);
@@ -185,19 +184,19 @@ public class Psidie {
             d4List.add(numOfd4);
             d2List.add(numOfd2);
             if (i == 0){
-                lowest = numOfRolls;
-                highest = numOfRolls;
+                lowestNumOfRolls = numOfRolls;
+                highestNumOfRolls = numOfRolls;
             }
-            if (numOfRolls < lowest) lowest = numOfRolls;
-            if (numOfRolls > highest) highest = numOfRolls;
+            if (numOfRolls < lowestNumOfRolls) lowestNumOfRolls = numOfRolls;
+            if (numOfRolls > highestNumOfRolls) highestNumOfRolls = numOfRolls;
             totalRolls += numOfRolls;
             totalPoints += pointsMade;
-            totald12 += numOfd12;
-            totald10 += numOfd10;
-            totald8 += numOfd8;
-            totald6 += numOfd6;
-            totald4 += numOfd4;
-            totald2 += numOfd2;
+            total_d12 += numOfd12;
+            total_d10 += numOfd10;
+            total_d8 += numOfd8;
+            total_d6 += numOfd6;
+            total_d4 += numOfd4;
+            total_d2 += numOfd2;
             numOfRolls = 0;
             pointsMade = 0;
             numOfd12 = 0;
