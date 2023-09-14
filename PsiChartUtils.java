@@ -17,10 +17,10 @@ import java.util.Collections;
 
 public class PsiChartUtils {
     public static void createRollChart(){
-        ListUtils.trimList(PsiDie.rollsList, PsiDie.trimAmount);
-        double[] valuesRolls = new double[PsiDie.rollsList.size()];
-        for (int i = 0; i < PsiDie.rollsList.size(); i++) {valuesRolls[i] = PsiDie.rollsList.get(i);}
-        int binny = Collections.max(PsiDie.rollsList);
+        ListUtils.trimList(PsiDie.total_Rolls, PsiDie.trimAmount);
+        double[] valuesRolls = new double[PsiDie.total_Rolls.size()];
+        for (int i = 0; i < PsiDie.total_Rolls.size(); i++) {valuesRolls[i] = PsiDie.total_Rolls.get(i);}
+        int binny = Collections.max(PsiDie.total_Rolls);
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         dataset.addSeries("key", valuesRolls, binny);
@@ -35,13 +35,13 @@ public class PsiChartUtils {
     }
     public static void createBoxPlot() {
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
-        dataset.add(PsiDie.rollsList, "Series", " total");
-        dataset.add(PsiDie.d2_List, "Series", " d2");
-        dataset.add(PsiDie.d4_List, "Series", " d4");
-        dataset.add(PsiDie.d6_List, "Series", " d6");
-        dataset.add(PsiDie.d8_List, "Series", " d8");
-        dataset.add(PsiDie.d10_List, "Series", " d10");
-        dataset.add(PsiDie.d12_List, "Series", " d12");
+        dataset.add(PsiDie.total_Rolls, "Series", " total");
+        dataset.add(PsiDie.total_d2, "Series", " d2");
+        dataset.add(PsiDie.total_d4, "Series", " d4");
+        dataset.add(PsiDie.total_d6, "Series", " d6");
+        dataset.add(PsiDie.total_d8, "Series", " d8");
+        dataset.add(PsiDie.total_d10, "Series", " d10");
+        dataset.add(PsiDie.total_d12, "Series", " d12");
 
         final CategoryAxis xAxis = new CategoryAxis("Type");
         final NumberAxis yAxis = new NumberAxis("Value");
@@ -51,12 +51,8 @@ public class PsiChartUtils {
         renderer.setDefaultToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
         final CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
 
-        final JFreeChart chart = new JFreeChart(
-                "Box-and-Whisker PsiDie",
-                new Font("SansSerif", Font.BOLD, 14),
-                plot,
-                false
-        );
+        final JFreeChart chart = new JFreeChart("Box-and-Whisker PsiDie", new Font("SansSerif", Font.BOLD,
+                14), plot, false);
 
         try {
             org.jfree.chart.ChartUtils.saveChartAsPNG(new File("C://Users//Erick Sanchez//Desktop//amountOfRollsBox.jpg"),
