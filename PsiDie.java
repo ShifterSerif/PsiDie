@@ -101,7 +101,7 @@ public class PsiDie {
                         numOfRolls++;
                         numOfRolls_d4++;
                         }
-                        if (result == currentFocusPoints) { if (include_d2){ psiDie -= 2;} else psiDie = 0;}
+                        if (result <= currentFocusPoints) { if (include_d2){ psiDie -= 2;} else psiDie = 0;}
                         if (result == 4 && include_d6 && increaseDieSize) psiDie += 2;
                     }
                     case 2 -> {{
@@ -110,7 +110,7 @@ public class PsiDie {
                         numOfRolls++;
                         numOfRolls_d2++;
                         }
-                        if (result == currentFocusPoints) psiDie = 0;
+                        if (result <= currentFocusPoints) psiDie = 0;
                         if (result == 2 && include_d4 && increaseDieSize) psiDie += 2;
                     }
                 }
