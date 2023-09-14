@@ -6,6 +6,10 @@ import java.util.Random;
 //        using it to use amp without losing focus point?
 //        circumstance or status bonus?
 //        Psyche and/or amp sets it to max?
+//        adds generic amp?
+//        Class archetype?
+//        Magic Missile-like where you can choose how many actions to use to roll the psi die?
+//        Add a reaction?
 
 public class PsiDie {
     static int numOfRolls, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4,
@@ -21,6 +25,7 @@ public class PsiDie {
     static Random myRand = new Random();
         static int testRuns = 50_000;
         static int trimAmount = 10;
+        static int currentFocusPoints = 2;
         public static int initialDieSize = 8;
         static int psiDie = initialDieSize;
         static boolean include_d12 = false;
