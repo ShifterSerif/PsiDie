@@ -24,10 +24,10 @@ public class PsiDie {
     static ArrayList<Integer> total_d4 = new ArrayList<>();
     static ArrayList<Integer> total_d2 = new ArrayList<>();
     static Random myRand = new Random();
-        static int testRuns = 20_000;
-        static int trimAmount = 10;
+        static int testRuns = 25_000;
+        static int trimAmount = 8;
         static int currentFocusPoints = 1;
-        public static int initialDieSize = 8;
+        public static int initialDieSize = 12;
         static int psiDie = initialDieSize;
         static boolean include_d20 = false;
         static boolean include_d12 = true;
@@ -35,8 +35,8 @@ public class PsiDie {
         static boolean include_d8 = true;
         static boolean include_d6 = true;
         static boolean include_d4 = true;
-        static boolean include_d2 = false;
-        static boolean increaseDieSize = true;
+        static boolean include_d2 = true;
+        static boolean increaseDieSize = false;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -52,8 +52,8 @@ public class PsiDie {
         if(include_d12){processDiceResults(total_d12, "d12");}
         if(include_d20){processDiceResults(total_d20, "d20");}
 
-        PsiChartUtils.createRollChart();
         PsiChartUtils.createBoxPlot();
+        PsiChartUtils.createRollChart();
 
         System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
     }
