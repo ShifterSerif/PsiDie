@@ -23,7 +23,7 @@ public class ListUtils {
     }
 
     public static int getListMedian(ArrayList<Integer> list){
-        if (list.size() % 2 == 0){
+        if(list.size() % 2 == 0){
             return (list.get(list.size() / 2) + list.get((list.size() / 2) - 1)) / 2;
         } else {
             return list.get(list.size() / 2);
@@ -31,9 +31,7 @@ public class ListUtils {
     }
     public static double getListTotal(ArrayList<Integer> list) {
         double total = 0;
-        for (double d : list) {
-            total += d;
-        }
+        for(double d : list) {total += d;}
         return total;
     }
     public static double getListAverage(ArrayList<Integer> list) {return getListTotal(list) / list.size();}
