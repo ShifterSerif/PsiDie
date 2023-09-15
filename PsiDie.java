@@ -40,14 +40,14 @@ public class PsiDie {
         long startTime = System.nanoTime();
         testDice();
 
-        processTotal(total_Rolls, "Rolls");
+        processTotalResults(total_Rolls, "Rolls");
         //processTotal(points, "Points");
-        if(include_d2){processDice(total_d2, "d2");}
-        if(include_d4){processDice(total_d4, "d4");}
-        if(include_d6){processDice(total_d6, "d6");}
-        if(include_d8){processDice(total_d8, "d8");}
-        if(include_d10){processDice(total_d10, "d10");}
-        if(include_d12){processDice(total_d12, "d12");}
+        if(include_d2){processDiceResults(total_d2, "d2");}
+        if(include_d4){processDiceResults(total_d4, "d4");}
+        if(include_d6){processDiceResults(total_d6, "d6");}
+        if(include_d8){processDiceResults(total_d8, "d8");}
+        if(include_d10){processDiceResults(total_d10, "d10");}
+        if(include_d12){processDiceResults(total_d12, "d12");}
 
         PsiChartUtils.createRollChart();
         PsiChartUtils.createBoxPlot();
@@ -60,58 +60,29 @@ public class PsiDie {
             psiDie = initialDieSize;
             do {
                 switch (psiDie) {
-                    case 12 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 12 -> {
                         numOfRolls_d12++;
-                        }
-                        if (result <= currentFocusPoints) psiDie -= 2;
+                        rollDice(include_d10, false);
                     }
-                    case 10 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 10 -> {
                         numOfRolls_d10++;
-                        }
-                        if (result <= currentFocusPoints && include_d8) psiDie -= 2;
-                        if (result == 10 && include_d12 && increaseDieSize) psiDie += 2;
+                        rollDice(include_d8, include_d10);
                     }
-                    case 8 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 8 -> {
                         numOfRolls_d8++;
-                        }
-                        if (result <= currentFocusPoints && include_d6) psiDie -= 2;
-                        if (result == 8 && include_d10 && increaseDieSize) psiDie += 2;
+                        rollDice(include_d6, include_d8);
                     }
-                    case 6 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 6 -> {
                         numOfRolls_d6++;
-                        }
-                        if (result <= currentFocusPoints && include_d4) psiDie -= 2;
-                        if (result == 6 && include_d8 && increaseDieSize) psiDie += 2;
+                        rollDice(include_d4, include_d6);
                     }
-                    case 4 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 4 -> {
                         numOfRolls_d4++;
-                        }
-                        if (result <= currentFocusPoints) { if (include_d2){ psiDie -= 2;} else psiDie = 0;}
-                        if (result == 4 && include_d6 && increaseDieSize) psiDie += 2;
+                        rollDice(include_d2, include_d4);
                     }
-                    case 2 -> {{
-                        result = myRand.nextInt(psiDie) + 1;
-                        pointsMade += result;
-                        numOfRolls++;
+                    case 2 -> {
                         numOfRolls_d2++;
-                        }
-                        if (result <= currentFocusPoints) psiDie = 0;
-                        if (result == 2 && include_d4 && increaseDieSize) psiDie += 2;
+                        rollDice(true, include_d2);
                     }
                 }
             } while (psiDie > 0);
@@ -131,7 +102,18 @@ public class PsiDie {
         }
     }
 
-    public static void processTotal(ArrayList<Integer> list, String name){
+    public static void rollDice(boolean includeLowerDie, boolean includeHigherDie){
+        result = myRand.nextInt(psiDie) + 1;
+        pointsMade += result;
+        numOfRolls++;
+        if(result <= currentFocusPoints && includeLowerDie) {
+            psiDie -= 2;
+            if(psiDie == 2 && !include_d2)
+                psiDie = 0;
+        }
+        if(result == psiDie && includeHigherDie && increaseDieSize) psiDie += 2;
+    }
+    public static void processTotalResults(ArrayList<Integer> list, String name){
         Collections.sort(list);
         ListUtils.winsorizeList(list, trimAmount);
         System.out.println("------" + name + " List------");
@@ -140,7 +122,7 @@ public class PsiDie {
         System.out.println("Median: " + ListUtils.getListMedian(list));
         System.out.println("Average: " + Math.round(ListUtils.getListAverage(list)));
     }
-    public static void processDice(ArrayList<Integer> list, String name){
+    public static void processDiceResults(ArrayList<Integer> list, String name){
         Collections.sort(list);
         ListUtils.winsorizeList(list, trimAmount);
         System.out.println("------" + name + " List------");
