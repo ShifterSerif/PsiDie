@@ -36,12 +36,13 @@ public class PsiChartUtils {
     public static void createBoxPlot() {
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         dataset.add(PsiDie.total_Rolls, "Series", " total");
-        dataset.add(PsiDie.total_d2, "Series", " d2");
-        dataset.add(PsiDie.total_d4, "Series", " d4");
-        dataset.add(PsiDie.total_d6, "Series", " d6");
-        dataset.add(PsiDie.total_d8, "Series", " d8");
-        dataset.add(PsiDie.total_d10, "Series", " d10");
-        dataset.add(PsiDie.total_d12, "Series", " d12");
+        if(PsiDie.include_d2) dataset.add(PsiDie.total_d2, "Series", " d2");
+        if(PsiDie.include_d4) dataset.add(PsiDie.total_d4, "Series", " d4");
+        if(PsiDie.include_d6) dataset.add(PsiDie.total_d6, "Series", " d6");
+        if(PsiDie.include_d8) dataset.add(PsiDie.total_d8, "Series", " d8");
+        if(PsiDie.include_d10) dataset.add(PsiDie.total_d10, "Series", " d10");
+        if(PsiDie.include_d12) dataset.add(PsiDie.total_d12, "Series", " d12");
+        if(PsiDie.include_d20) dataset.add(PsiDie.total_d20, "Series", " d20");
 
         final CategoryAxis xAxis = new CategoryAxis("Type");
         final NumberAxis yAxis = new NumberAxis("Value");
