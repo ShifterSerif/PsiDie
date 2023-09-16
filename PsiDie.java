@@ -2,14 +2,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-//Ideas -   Psi die goes down/ up if it equals your remaining amount of focus points
-//          using it to use amp without losing focus point?
-//          circumstance or status bonus?
-//          amp sets it to max?
-//          adds generic amp?
-//          Class archetype?
-//          Magic Missile-like where you can choose how many actions to use to roll the psi die?
-//          Add a reaction?
+    //Ideas-Psi die goes down/ up if it equals your remaining amount of focus points
+    //      using it to use amp without losing focus point?
+    //      circumstance or status bonus?
+    //      amp sets it to max?
+    //      adds generic amp?
+    //      Class archetype?
+    //      Magic Missile-like where you can choose how many actions to use to roll the psi die?
+    //      Add a reaction?
 
 public class PsiDie {
     static int numOfRollsTotal, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
