@@ -2,18 +2,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-//Ideas - Psi die goes down/ up if it equals your remaining amount of focus points
-//        using it to use amp without losing focus point?
-//        circumstance or status bonus?
-//        Psyche and/or amp sets it to max?
-//        adds generic amp?
-//        Class archetype?
-//        Magic Missile-like where you can choose how many actions to use to roll the psi die?
-//        Add a reaction?
+//Ideas -   Psi die goes down/ up if it equals your remaining amount of focus points
+//          using it to use amp without losing focus point?
+//          circumstance or status bonus?
+//          amp sets it to max?
+//          adds generic amp?
+//          Class archetype?
+//          Magic Missile-like where you can choose how many actions to use to roll the psi die?
+//          Add a reaction?
 
 public class PsiDie {
-    static int numOfRollsTotal, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4,
-            numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
+    static int numOfRollsTotal, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
+            numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
     static ArrayList<Integer> total_Rolls = new ArrayList<>();
     static ArrayList<Integer> points = new ArrayList<>();
     static ArrayList<Integer> total_d20 = new ArrayList<>();
@@ -60,8 +60,7 @@ public class PsiDie {
     public static void testDice(){
         for (int i = 0; i < testRuns; i++) {
             psiDie = initialDieSize;
-            do {
-                switch (psiDie) {
+            do { switch (psiDie) {
                     case 20 -> {
                         numOfRolls_d20++;
                         rollDice(include_d12, false);
@@ -91,8 +90,7 @@ public class PsiDie {
                         rollDice(true, include_d4);
                     }
                     default -> System.out.println(psiDie);
-                }
-            } while (psiDie > 0);
+                } } while (psiDie > 0);
             total_Rolls.add(numOfRollsTotal);
             total_d20.add(numOfRolls_d20);
             total_d12.add(numOfRolls_d12);
