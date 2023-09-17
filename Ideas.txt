@@ -6,6 +6,16 @@ adds generic amp?
 Class archetype? it gives a subconscious choice similar to spell shot "Controlled Chaos"
 Magic Missile-like where you can choose how many actions to use to roll the psi die?
 Add a reaction?
+Follows fibonacci sequence?
+
+
+Prerequisite: You must be a Psychic
+
+Controlled Chaos Adjustment
+
+
+
+
 
 Subconscious Mind
 Controlled Chaos
@@ -13,3 +23,5 @@ Key Ability: Intelligence
 Psyche Action: Expand Entropy
 1 action
 Increase your Psi Die by one size. You can use this action once per turn.
+
+or rework Precise Discipline
