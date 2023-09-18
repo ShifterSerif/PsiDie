@@ -18,16 +18,16 @@ public class PsiDie {
         static int testRuns = 12_000;
         static int trimAmount = 8;
         static int currentFocusPoints = 3;
-        public static int initialDieSize = 4;
+        public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
-        static boolean include_d20 = false;
-        static boolean include_d12 = false;
-        static boolean include_d10 = false;
-        static boolean include_d8 = false;
-        static boolean include_d6 = false;
+        static boolean include_d20 = true;
+        static boolean include_d12 = true;
+        static boolean include_d10 = true;
+        static boolean include_d8 = true;
+        static boolean include_d6 = true;
         static boolean include_d4 = true;
         static boolean include_d2 = true;
-        static boolean increaseDieSize = true;
+        static boolean increaseDieSize = false;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -45,7 +45,7 @@ public class PsiDie {
         PsiChartUtils.createBoxPlot();
         PsiChartUtils.createRollChart();
 
-        System.out.println("Mode: " + ListUtils.getListMode(totalRolls));
+        //System.out.println("Mode: " + ListUtils.getListMode(totalRolls));
 
         System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
     }
@@ -109,7 +109,6 @@ public class PsiDie {
             psiDie -= 2;
             if(psiDie == 18) psiDie = 12;
             if(psiDie == 2 && !include_d2) psiDie = 0;
-            //if(psiDie == 2 && result == 2) result = 0;   // which order should this go in?
         }
         else if(result == psiDie && includeHigherDie && increaseDieSize) {
             psiDie += 2;
