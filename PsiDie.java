@@ -15,11 +15,12 @@ public class PsiDie {
     static ArrayList<Integer> totalRolls_d4 = new ArrayList<>();
     static ArrayList<Integer> totalRolls_d2 = new ArrayList<>();
     static Random myRand = new Random();
-        static int testRuns = 12_000;
+        static int testRuns = 100_000;
         static int trimAmount = 8;
         static int currentFocusPoints = 3;
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
+        static boolean includePoints = false;
         static boolean include_d20 = true;
         static boolean include_d12 = true;
         static boolean include_d10 = true;
@@ -27,20 +28,27 @@ public class PsiDie {
         static boolean include_d6 = true;
         static boolean include_d4 = true;
         static boolean include_d2 = true;
-        static boolean increaseDieSize = false;
+        static boolean increaseDieSize = true;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
+        if(initialDieSize > 12 && !include_d20) initialDieSize = 12;
+        if(initialDieSize > 10 && !include_d12) initialDieSize = 10;
+        if(initialDieSize > 8 && !include_d10) initialDieSize = 8;
+        if(initialDieSize > 6 && !include_d8) initialDieSize = 6;
+        if(initialDieSize > 4 && !include_d6) initialDieSize = 4;
+        if(initialDieSize > 2 && !include_d4) initialDieSize = 2;
         testDice();
 
-        if(include_d2){processDiceResults(totalRolls_d2, "d2");}
-        if(include_d4){processDiceResults(totalRolls_d4, "d4");}
-        if(include_d6){processDiceResults(totalRolls_d6, "d6");}
-        if(include_d8){processDiceResults(totalRolls_d8, "d8");}
-        if(include_d10){processDiceResults(totalRolls_d10, "d10");}
-        if(include_d12){processDiceResults(totalRolls_d12, "d12");}
-        if(include_d20){processDiceResults(totalRolls_d20, "d20");}
+        if(include_d2) processDiceResults(totalRolls_d2, "d2");
+        if(include_d4) processDiceResults(totalRolls_d4, "d4");
+        if(include_d6) processDiceResults(totalRolls_d6, "d6");
+        if(include_d8) processDiceResults(totalRolls_d8, "d8");
+        if(include_d10) processDiceResults(totalRolls_d10, "d10");
+        if(include_d12) processDiceResults(totalRolls_d12, "d12");
+        if(include_d20) processDiceResults(totalRolls_d20, "d20");
         processTotalResults(totalRolls, "Total");
+        if(includePoints) processTotalResults(points, "Points");
 
         PsiChartUtils.createBoxPlot();
         PsiChartUtils.createRollChart();
@@ -85,15 +93,14 @@ public class PsiDie {
                     default -> System.out.println(psiDie);
                 } } while (psiDie > 0);
             totalRolls.add(totalNumOfRolls);
-            totalRolls_d20.add(numOfRolls_d20);
-            totalRolls_d12.add(numOfRolls_d12);
-            totalRolls_d10.add(numOfRolls_d10);
-            totalRolls_d8.add(numOfRolls_d8);
-            totalRolls_d6.add(numOfRolls_d6);
-            totalRolls_d4.add(numOfRolls_d4);
-            totalRolls_d2.add(numOfRolls_d2);
-            points.add(pointsMade);
-            if (i == 0){ lowestNumOfRolls = totalNumOfRolls; highestNumOfRolls = totalNumOfRolls;}
+            if (include_d20) totalRolls_d20.add(numOfRolls_d20);
+            if (include_d12) totalRolls_d12.add(numOfRolls_d12);
+            if (include_d10) totalRolls_d10.add(numOfRolls_d10);
+            if (include_d8) totalRolls_d8.add(numOfRolls_d8);
+            if (include_d6) totalRolls_d6.add(numOfRolls_d6);
+            if (include_d4) totalRolls_d4.add(numOfRolls_d4);
+            if (include_d2) totalRolls_d2.add(numOfRolls_d2);
+            if (includePoints) points.add(pointsMade);
             if (totalNumOfRolls < lowestNumOfRolls) lowestNumOfRolls = totalNumOfRolls;
             if (totalNumOfRolls > highestNumOfRolls) highestNumOfRolls = totalNumOfRolls;
             totalNumOfRolls = pointsMade = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 =
@@ -118,7 +125,7 @@ public class PsiDie {
     public static void processTotalResults(ArrayList<Integer> list, String name){
         Collections.sort(list);
         ListUtils.winsorizeList(list, trimAmount);
-        System.out.println("------" + name + " Rolls List------");
+        System.out.println("-----" + name + " Rolls List-----");
         System.out.println("Lowest: " + list.get(0));
         System.out.println("Highest: " + list.get(list.size() - 1));
         System.out.println("Mean: " + (float)Math.round(ListUtils.getListAverage(list)*100)/100);
