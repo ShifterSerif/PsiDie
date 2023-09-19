@@ -15,9 +15,9 @@ public class PsiDie {
     static ArrayList<Integer> totalRolls_d4 = new ArrayList<>();
     static ArrayList<Integer> totalRolls_d2 = new ArrayList<>();
     static Random myRand = new Random();
-        static int testRuns = 100_000;
+        static int testRuns = 250_000;
         static int trimAmount = 8;
-        static int currentFocusPoints = 3;
+        static int currentFocusPoints = 1;
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
         static boolean includePoints = false;
@@ -51,7 +51,9 @@ public class PsiDie {
         if(includePoints) processTotalResults(points, "Points");
 
         PsiChartUtils.createBoxPlot();
+        System.out.print(".");
         PsiChartUtils.createRollChart();
+        System.out.print(".");
 
         //System.out.println("Mode: " + ListUtils.getListMode(totalRolls));
 
