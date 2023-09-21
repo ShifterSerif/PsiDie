@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -15,15 +16,17 @@ public class PsiDie {
     static ArrayList<Integer> totalRolls_d4List = new ArrayList<>();
     static ArrayList<Integer> totalRolls_d2List = new ArrayList<>();
     static Random myRand = new Random();
-        static int testRuns = 1_000;
-    static int[] totalRolls = new int[testRuns];
-
+        static int testRuns = 1_00;
+    static int[] totalRolls = new int[testRuns], totalRolls_d20 = new int[testRuns],
+            totalRolls_d12  = new int[testRuns], totalRolls_d10  = new int[testRuns],
+            totalRolls_d8 = new int[testRuns], totalRolls_d6 = new int[testRuns],
+            totalRolls_d4 = new int[testRuns], totalRolls_d2 = new int[testRuns], points = new int[testRuns];
         static int trimAmount = 10;
         static int currentFocusPoints = 1;
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
         static boolean includePoints = false;
-        static boolean include_d20 = false;
+        static boolean include_d20 = true;
         static boolean include_d12 = true;
         static boolean include_d10 = true;
         static boolean include_d8 = true;
@@ -42,15 +45,14 @@ public class PsiDie {
         if(initialDieSize > 2 && !include_d4) initialDieSize = 2;
         testDice();
 
-        if(include_d2) processResults(totalRolls_d2List, "d2");
-        if(include_d4) processResults(totalRolls_d4List, "d4");
-        if(include_d6) processResults(totalRolls_d6List, "d6");
-        if(include_d8) processResults(totalRolls_d8List, "d8");
-        if(include_d10) processResults(totalRolls_d10List, "d10");
-        if(include_d12) processResults(totalRolls_d12List, "d12");
-        if(include_d20) processResults(totalRolls_d20List, "d20");
-        processResults(totalRollsList, "Total");
-        if(includePoints) processResults(pointsList, "Points");
+        if(include_d2) processResults(totalRolls_d2, "d2");
+        if(include_d4) processResults(totalRolls_d4, "d4");
+        if(include_d6) processResults(totalRolls_d6, "d6");
+        if(include_d8) processResults(totalRolls_d8, "d8");
+        if(include_d10) processResults(totalRolls_d10, "d10");;
+        if(include_d12) processResults(totalRolls_d12, "d12");;
+        if(include_d20) processResults(totalRolls_d20, "d20");;
+        if(includePoints) processResults(points, "Points");
 
         PsiChartUtils.createBoxPlot();
         System.out.print(".");
@@ -94,15 +96,15 @@ public class PsiDie {
                     }
                     default -> System.out.println(psiDie);
                 } } while (psiDie > 0);
-            totalRollsList.add(totalNumOfRolls);
-            if (include_d20) totalRolls_d20List.add(numOfRolls_d20);
-            if (include_d12) totalRolls_d12List.add(numOfRolls_d12);
-            if (include_d10) totalRolls_d10List.add(numOfRolls_d10);
-            if (include_d8) totalRolls_d8List.add(numOfRolls_d8);
-            if (include_d6) totalRolls_d6List.add(numOfRolls_d6);
-            if (include_d4) totalRolls_d4List.add(numOfRolls_d4);
-            if (include_d2) totalRolls_d2List.add(numOfRolls_d2);
-            if (includePoints) pointsList.add(pointsMade);
+            totalRolls[i] = totalNumOfRolls;
+            if (include_d20) totalRolls_d20[i] = numOfRolls_d20;
+            if (include_d12) totalRolls_d12[i] = numOfRolls_d12;
+            if (include_d10) totalRolls_d10[i] = numOfRolls_d10;
+            if (include_d8) totalRolls_d8[i] = numOfRolls_d8;
+            if (include_d6) totalRolls_d6[i] = numOfRolls_d6;
+            if (include_d4) totalRolls_d4[i] = numOfRolls_d4;
+            if (include_d2) totalRolls_d2[i] = numOfRolls_d2;
+            if (includePoints) points[i] = pointsMade;
             if (totalNumOfRolls < lowestNumOfRolls) lowestNumOfRolls = totalNumOfRolls;
             if (totalNumOfRolls > highestNumOfRolls) highestNumOfRolls = totalNumOfRolls;
             totalNumOfRolls = pointsMade = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 =
@@ -123,22 +125,21 @@ public class PsiDie {
             if (psiDie == 14) psiDie = 20;
         }
     }
-    public static void processResults(ArrayList<Integer> list, String name){
-        Collections.sort(list);
-        System.out.println(list.size());
-        ListUtils.winsorizeList(list, trimAmount);
-        float listAverage = ListUtils.getListAverage(list);
-        if (list == totalRollsList || list == pointsList){
-            System.out.println("-----" + name + " Rolls List-----");
-            System.out.println("Lowest: " + list.get(0));
-            System.out.println("Highest: " + list.get(list.size() - 1));
+    public static void processResults(int[] array, String name){
+
+        ArrayUtils.winsorizeArray(array, trimAmount);
+        float arrayAverage = ArrayUtils.getArrayAverage(array);
+        if (Arrays.equals(array, totalRolls) || Arrays.equals(array, points)){
+            System.out.println("-----" + name + " Rolls -----");
+            System.out.println("Lowest: " + array[0]);
+            System.out.println("Highest: " + array[array.length - 1]);
             //System.out.println("Mode: " + ListUtils.getListMode(list));
         } else {
-            float totalAverage = ListUtils.getListAverage(totalRollsList);
-            System.out.println("------" + name + " Rolls List------");
-            System.out.println("Percentage: " + Math.round(listAverage / totalAverage * 10000)/100f + "%");
+            float totalAverage = ArrayUtils.getArrayAverage(totalRolls);
+            System.out.println("------" + name + " Rolls ------");
+            System.out.println("Percentage: " + Math.round(arrayAverage / totalAverage * 10000)/100f + "%");
         }
-        System.out.println("Mean: " + Math.round(listAverage*100)/100f);
-        System.out.println("Median: " + ListUtils.getListMedian(list));
+        System.out.println("Mean: " + Math.round(arrayAverage*100)/100f);
+        System.out.println("Median: " + ArrayUtils.getArrayMedian(array));
     }
 }
