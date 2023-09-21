@@ -16,10 +16,17 @@ import java.util.Collections;
 
 public class PsiChartUtils {
     public static void createRollChart(){
-        ListUtils.trimList(PsiDie.totalRolls, PsiDie.trimAmount);
-        double[] valuesRolls = new double[PsiDie.totalRolls.size()];
-        for (int i = 0; i < PsiDie.totalRolls.size(); i++) {valuesRolls[i] = PsiDie.totalRolls.get(i);}
-        int binny = Collections.max(PsiDie.totalRolls);
+        ListUtils.trimList(PsiDie.totalRollsList, PsiDie.trimAmount);
+        double[] valuesRolls = new double[PsiDie.totalRollsList.size()];
+        for (int i = 0; i < PsiDie.totalRollsList.size(); i++) {valuesRolls[i] = PsiDie.totalRollsList.get(i);}
+
+//        int trimmedLength = (PsiDie.totalRolls.size() * PsiDie.trimAmount)/100;
+//        double[] valuesRolls = new double[PsiDie.totalRolls.size() - (trimmedLength * 2)];
+//        for (int i = 1; i < (PsiDie.totalRolls.size() - trimmedLength)-1; i++) {
+//            valuesRolls[i] = PsiDie.totalRolls.get(i+trimmedLength);
+//        }
+
+        int binny = Collections.max(PsiDie.totalRollsList);
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         dataset.addSeries("key", valuesRolls, binny);
@@ -35,14 +42,14 @@ public class PsiChartUtils {
     }
     public static void createBoxPlot() {
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
-        dataset.add(PsiDie.totalRolls, "Series", " total");
-        if(PsiDie.include_d2) dataset.add(PsiDie.totalRolls_d2, "Series", " d2");
-        if(PsiDie.include_d4) dataset.add(PsiDie.totalRolls_d4, "Series", " d4");
-        if(PsiDie.include_d6) dataset.add(PsiDie.totalRolls_d6, "Series", " d6");
-        if(PsiDie.include_d8) dataset.add(PsiDie.totalRolls_d8, "Series", " d8");
-        if(PsiDie.include_d10) dataset.add(PsiDie.totalRolls_d10, "Series", " d10");
-        if(PsiDie.include_d12) dataset.add(PsiDie.totalRolls_d12, "Series", " d12");
-        if(PsiDie.include_d20) dataset.add(PsiDie.totalRolls_d20, "Series", " d20");
+        dataset.add(PsiDie.totalRollsList, "Series", " total");
+        if(PsiDie.include_d2) dataset.add(PsiDie.totalRolls_d2List, "Series", " d2");
+        if(PsiDie.include_d4) dataset.add(PsiDie.totalRolls_d4List, "Series", " d4");
+        if(PsiDie.include_d6) dataset.add(PsiDie.totalRolls_d6List, "Series", " d6");
+        if(PsiDie.include_d8) dataset.add(PsiDie.totalRolls_d8List, "Series", " d8");
+        if(PsiDie.include_d10) dataset.add(PsiDie.totalRolls_d10List, "Series", " d10");
+        if(PsiDie.include_d12) dataset.add(PsiDie.totalRolls_d12List, "Series", " d12");
+        if(PsiDie.include_d20) dataset.add(PsiDie.totalRolls_d20List, "Series", " d20");
 
         final CategoryAxis xAxis = new CategoryAxis("Type");
         final NumberAxis yAxis = new NumberAxis("Value");

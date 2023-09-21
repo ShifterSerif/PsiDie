@@ -5,18 +5,20 @@ import java.util.Random;
 public class PsiDie {
     static int totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
-    static ArrayList<Integer> totalRolls = new ArrayList<>();
-    static ArrayList<Integer> points = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d20 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d12 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d10 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d8 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d6 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d4 = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d2 = new ArrayList<>();
+    static ArrayList<Integer> totalRollsList = new ArrayList<>();
+    static ArrayList<Integer> pointsList = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d20List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d12List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d10List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d8List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d6List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d4List = new ArrayList<>();
+    static ArrayList<Integer> totalRolls_d2List = new ArrayList<>();
     static Random myRand = new Random();
-        static int testRuns = 250_000;
-        static int trimAmount = 8;
+        static int testRuns = 1_000;
+    static int[] totalRolls = new int[testRuns];
+
+        static int trimAmount = 10;
         static int currentFocusPoints = 1;
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
@@ -40,15 +42,15 @@ public class PsiDie {
         if(initialDieSize > 2 && !include_d4) initialDieSize = 2;
         testDice();
 
-        if(include_d2) processResults(totalRolls_d2, "d2");
-        if(include_d4) processResults(totalRolls_d4, "d4");
-        if(include_d6) processResults(totalRolls_d6, "d6");
-        if(include_d8) processResults(totalRolls_d8, "d8");
-        if(include_d10) processResults(totalRolls_d10, "d10");
-        if(include_d12) processResults(totalRolls_d12, "d12");
-        if(include_d20) processResults(totalRolls_d20, "d20");
-        processResults(totalRolls, "Total");
-        if(includePoints) processResults(points, "Points");
+        if(include_d2) processResults(totalRolls_d2List, "d2");
+        if(include_d4) processResults(totalRolls_d4List, "d4");
+        if(include_d6) processResults(totalRolls_d6List, "d6");
+        if(include_d8) processResults(totalRolls_d8List, "d8");
+        if(include_d10) processResults(totalRolls_d10List, "d10");
+        if(include_d12) processResults(totalRolls_d12List, "d12");
+        if(include_d20) processResults(totalRolls_d20List, "d20");
+        processResults(totalRollsList, "Total");
+        if(includePoints) processResults(pointsList, "Points");
 
         PsiChartUtils.createBoxPlot();
         System.out.print(".");
@@ -92,15 +94,15 @@ public class PsiDie {
                     }
                     default -> System.out.println(psiDie);
                 } } while (psiDie > 0);
-            totalRolls.add(totalNumOfRolls);
-            if (include_d20) totalRolls_d20.add(numOfRolls_d20);
-            if (include_d12) totalRolls_d12.add(numOfRolls_d12);
-            if (include_d10) totalRolls_d10.add(numOfRolls_d10);
-            if (include_d8) totalRolls_d8.add(numOfRolls_d8);
-            if (include_d6) totalRolls_d6.add(numOfRolls_d6);
-            if (include_d4) totalRolls_d4.add(numOfRolls_d4);
-            if (include_d2) totalRolls_d2.add(numOfRolls_d2);
-            if (includePoints) points.add(pointsMade);
+            totalRollsList.add(totalNumOfRolls);
+            if (include_d20) totalRolls_d20List.add(numOfRolls_d20);
+            if (include_d12) totalRolls_d12List.add(numOfRolls_d12);
+            if (include_d10) totalRolls_d10List.add(numOfRolls_d10);
+            if (include_d8) totalRolls_d8List.add(numOfRolls_d8);
+            if (include_d6) totalRolls_d6List.add(numOfRolls_d6);
+            if (include_d4) totalRolls_d4List.add(numOfRolls_d4);
+            if (include_d2) totalRolls_d2List.add(numOfRolls_d2);
+            if (includePoints) pointsList.add(pointsMade);
             if (totalNumOfRolls < lowestNumOfRolls) lowestNumOfRolls = totalNumOfRolls;
             if (totalNumOfRolls > highestNumOfRolls) highestNumOfRolls = totalNumOfRolls;
             totalNumOfRolls = pointsMade = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 =
@@ -123,15 +125,16 @@ public class PsiDie {
     }
     public static void processResults(ArrayList<Integer> list, String name){
         Collections.sort(list);
+        System.out.println(list.size());
         ListUtils.winsorizeList(list, trimAmount);
         float listAverage = ListUtils.getListAverage(list);
-        if (list == totalRolls || list == points){
+        if (list == totalRollsList || list == pointsList){
             System.out.println("-----" + name + " Rolls List-----");
             System.out.println("Lowest: " + list.get(0));
             System.out.println("Highest: " + list.get(list.size() - 1));
             //System.out.println("Mode: " + ListUtils.getListMode(list));
         } else {
-            float totalAverage = ListUtils.getListAverage(totalRolls);
+            float totalAverage = ListUtils.getListAverage(totalRollsList);
             System.out.println("------" + name + " Rolls List------");
             System.out.println("Percentage: " + Math.round(listAverage / totalAverage * 10000)/100f + "%");
         }
