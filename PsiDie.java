@@ -21,14 +21,14 @@ public class PsiDie {
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
         static boolean includePoints = false;
-        static boolean include_d20 = true;
+        static boolean include_d20 = false;
         static boolean include_d12 = true;
         static boolean include_d10 = true;
         static boolean include_d8 = true;
         static boolean include_d6 = true;
         static boolean include_d4 = true;
         static boolean include_d2 = true;
-        static boolean increaseDieSize = true;
+        static boolean increaseDieSize = false;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -40,22 +40,20 @@ public class PsiDie {
         if(initialDieSize > 2 && !include_d4) initialDieSize = 2;
         testDice();
 
-        if(include_d2) processDiceResults(totalRolls_d2, "d2");
-        if(include_d4) processDiceResults(totalRolls_d4, "d4");
-        if(include_d6) processDiceResults(totalRolls_d6, "d6");
-        if(include_d8) processDiceResults(totalRolls_d8, "d8");
-        if(include_d10) processDiceResults(totalRolls_d10, "d10");
-        if(include_d12) processDiceResults(totalRolls_d12, "d12");
-        if(include_d20) processDiceResults(totalRolls_d20, "d20");
-        processTotalResults(totalRolls, "Total");
-        if(includePoints) processTotalResults(points, "Points");
+        if(include_d2) processResults(totalRolls_d2, "d2");
+        if(include_d4) processResults(totalRolls_d4, "d4");
+        if(include_d6) processResults(totalRolls_d6, "d6");
+        if(include_d8) processResults(totalRolls_d8, "d8");
+        if(include_d10) processResults(totalRolls_d10, "d10");
+        if(include_d12) processResults(totalRolls_d12, "d12");
+        if(include_d20) processResults(totalRolls_d20, "d20");
+        processResults(totalRolls, "Total");
+        if(includePoints) processResults(points, "Points");
 
         PsiChartUtils.createBoxPlot();
         System.out.print(".");
         PsiChartUtils.createRollChart();
         System.out.print(".");
-
-        //System.out.println("Mode: " + ListUtils.getListMode(totalRolls));
 
         System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
     }
@@ -109,7 +107,6 @@ public class PsiDie {
                     numOfRolls_d6 = numOfRolls_d4 = numOfRolls_d2 = 0;
         }
     }
-
     public static void rollDice(boolean includeLowerDie, boolean includeHigherDie){
         result = myRand.nextInt(psiDie) + 1;
         pointsMade += result;
@@ -124,23 +121,21 @@ public class PsiDie {
             if (psiDie == 14) psiDie = 20;
         }
     }
-    public static void processTotalResults(ArrayList<Integer> list, String name){
+    public static void processResults(ArrayList<Integer> list, String name){
         Collections.sort(list);
         ListUtils.winsorizeList(list, trimAmount);
-        System.out.println("-----" + name + " Rolls List-----");
-        System.out.println("Lowest: " + list.get(0));
-        System.out.println("Highest: " + list.get(list.size() - 1));
-        System.out.println("Mean: " + (float)Math.round(ListUtils.getListAverage(list)*100)/100);
-        System.out.println("Median: " + ListUtils.getListMedian(list));
-    }
-    public static void processDiceResults(ArrayList<Integer> list, String name){
-        Collections.sort(list);
-        ListUtils.winsorizeList(list, trimAmount);
-        float listAverage = (float)Math.round(ListUtils.getListAverage(list)*100)/100f;
-        System.out.println("------" + name + " Rolls List------");
-        System.out.println("Percentage: " + (float)Math.round(listAverage/
-                ListUtils.getListAverage(totalRolls)*10000)/100 + "%");
-        System.out.println("Mean: " + listAverage);
+        float listAverage = ListUtils.getListAverage(list);
+        if (list == totalRolls || list == points){
+            System.out.println("-----" + name + " Rolls List-----");
+            System.out.println("Lowest: " + list.get(0));
+            System.out.println("Highest: " + list.get(list.size() - 1));
+            //System.out.println("Mode: " + ListUtils.getListMode(list));
+        } else {
+            float totalAverage = ListUtils.getListAverage(totalRolls);
+            System.out.println("------" + name + " Rolls List------");
+            System.out.println("Percentage: " + Math.round(listAverage / totalAverage * 10000)/100f + "%");
+        }
+        System.out.println("Mean: " + Math.round(listAverage*100)/100f);
         System.out.println("Median: " + ListUtils.getListMedian(list));
     }
 }
