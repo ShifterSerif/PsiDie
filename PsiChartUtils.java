@@ -37,7 +37,7 @@ public class PsiChartUtils {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfRolls.jpg"),
-                    histogram, 1200, 800);
+                    histogram, 1800, 1200);
         }catch(IOException ignored) {}
     }
     public static void createBoxPlot() {
@@ -67,7 +67,7 @@ public class PsiChartUtils {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRollsBox.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfBoxRollsBox.jpg"),
-                    chart, 1200, 800);
+                    chart, 1800, 1200);
         }catch(IOException ignored) {}
     }
     public static void ArrayToList(){

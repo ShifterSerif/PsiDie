@@ -8,7 +8,7 @@ public class PsiDie {
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
 
     static Random myRand = new Random();
-        static int testRuns = 1000_000;
+        static int testRuns = 1_000_000;
     static int[] totalRolls = new int[testRuns], totalRolls_d20 = new int[testRuns],
             totalRolls_d12  = new int[testRuns], totalRolls_d10  = new int[testRuns],
             totalRolls_d8 = new int[testRuns], totalRolls_d6 = new int[testRuns],
@@ -47,9 +47,9 @@ public class PsiDie {
         processResults(totalRolls, "Total");
         if(includePoints) processResults(points, "Points");
 
-        PsiChartUtils.createBoxPlot();
-        System.out.print(".");
         PsiChartUtils.createRollChart();
+        System.out.print(".");
+        PsiChartUtils.createBoxPlot();
         System.out.print(".");
 
         System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
