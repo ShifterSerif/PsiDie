@@ -6,22 +6,14 @@ import java.util.Random;
 public class PsiDie {
     static int totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
-    static ArrayList<Integer> totalRollsList = new ArrayList<>();
-    static ArrayList<Integer> pointsList = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d20List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d12List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d10List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d8List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d6List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d4List = new ArrayList<>();
-    static ArrayList<Integer> totalRolls_d2List = new ArrayList<>();
+
     static Random myRand = new Random();
-        static int testRuns = 1_00;
+        static int testRuns = 1000_000;
     static int[] totalRolls = new int[testRuns], totalRolls_d20 = new int[testRuns],
             totalRolls_d12  = new int[testRuns], totalRolls_d10  = new int[testRuns],
             totalRolls_d8 = new int[testRuns], totalRolls_d6 = new int[testRuns],
             totalRolls_d4 = new int[testRuns], totalRolls_d2 = new int[testRuns], points = new int[testRuns];
-        static int trimAmount = 10;
+        static float trimAmount = 8;
         static int currentFocusPoints = 1;
         public static int initialDieSize = 20;
         static int psiDie = initialDieSize;
@@ -52,6 +44,7 @@ public class PsiDie {
         if(include_d10) processResults(totalRolls_d10, "d10");;
         if(include_d12) processResults(totalRolls_d12, "d12");;
         if(include_d20) processResults(totalRolls_d20, "d20");;
+        processResults(totalRolls, "Total");
         if(includePoints) processResults(points, "Points");
 
         PsiChartUtils.createBoxPlot();
@@ -126,7 +119,6 @@ public class PsiDie {
         }
     }
     public static void processResults(int[] array, String name){
-
         ArrayUtils.winsorizeArray(array, trimAmount);
         float arrayAverage = ArrayUtils.getArrayAverage(array);
         if (Arrays.equals(array, totalRolls) || Arrays.equals(array, points)){

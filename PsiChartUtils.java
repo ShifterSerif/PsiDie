@@ -12,50 +12,45 @@ import org.jfree.data.statistics.HistogramType;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 
 public class PsiChartUtils {
+    static ArrayList<Integer> totalRollsList = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(),
+            totalRolls_d12List = new ArrayList<>(), totalRolls_d10List = new ArrayList<>(),
+            totalRolls_d8List = new ArrayList<>(), totalRolls_d6List = new ArrayList<>(),
+            totalRolls_d4List = new ArrayList<>(), totalRolls_d2List = new ArrayList<>();
+
     public static void createRollChart(){
-//        ArrayUtils.trimArray(PsiDie.totalRolls, PsiDie.trimAmount);
-
-
-
-//        int trimmedLength = (PsiDie.totalRolls.size() * PsiDie.trimAmount)/100;
-//        double[] valuesRolls = new double[PsiDie.totalRolls.size() - (trimmedLength * 2)];
-//        for (int i = 1; i < (PsiDie.totalRolls.size() - trimmedLength)-1; i++) {
-//            valuesRolls[i] = PsiDie.totalRolls.get(i+trimmedLength);
-//        }
-//      double[] valuesRolls = new double[PsiDie.totalRollsList.size()];
-        double[] valuesRolls = new double[PsiDie.totalRolls.length];
-//      for (int i = 0; i < PsiDie.totalRollsList.size(); i++) {valuesRolls[i] = PsiDie.totalRollsList.get(i);}
-        for (int i = 0; i < PsiDie.totalRollsList.size(); i++) {valuesRolls[i] = PsiDie.totalRolls[i];}
-
-        int binny = ArrayUtils.getArrayMax(PsiDie.totalRolls);
+        int trimmedLength = (int) (PsiDie.totalRolls.length * (PsiDie.trimAmount/100));
+        double[] valuesRolls = new double[(PsiDie.totalRolls.length - (trimmedLength * 2))];
+        for (int i = 0; i < (PsiDie.totalRolls.length - (trimmedLength * 2)); i++) {
+            valuesRolls[i] = PsiDie.totalRolls[i + trimmedLength];
+        }
+        int numOfBars = 80;
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-        dataset.addSeries("key", valuesRolls, binny);
+        dataset.addSeries("key", valuesRolls, numOfBars);
 
-        JFreeChart histogram = ChartFactory.createHistogram("Histogram PsiDie","Rolls","Frequency",
-                dataset, PlotOrientation.VERTICAL,false,false,false);
+        JFreeChart histogram = ChartFactory.createHistogram("Histogram PsiDie","Rolls",
+                "Frequency", dataset, PlotOrientation.VERTICAL,false,false,false);
         try {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfRolls.jpg"),
-                    histogram, 600, 400);
+                    histogram, 1200, 800);
         }catch(IOException ignored) {}
-        //System.out.println("Histogram created");
     }
     public static void createBoxPlot() {
+        ArrayToList();
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
-        dataset.add(Collections.singletonList(PsiDie.totalRolls), "Series", " total");
-        if(PsiDie.include_d2) dataset.add(Collections.singletonList(PsiDie.totalRolls_d2), "Series", " d2");
-        if(PsiDie.include_d4) dataset.add(Collections.singletonList(PsiDie.totalRolls_d4), "Series", " d4");
-        if(PsiDie.include_d6) dataset.add(Collections.singletonList(PsiDie.totalRolls_d6), "Series", " d6");
-        if(PsiDie.include_d8) dataset.add(Collections.singletonList(PsiDie.totalRolls_d8), "Series", " d8");
-        if(PsiDie.include_d10) dataset.add(Collections.singletonList(PsiDie.totalRolls_d10), "Series", " d10");
-        if(PsiDie.include_d12) dataset.add(Collections.singletonList(PsiDie.totalRolls_d12), "Series", " d12");
-        if(PsiDie.include_d20) dataset.add(Collections.singletonList(PsiDie.totalRolls_d20), "Series", " d20");
+        dataset.add(totalRollsList, "Series", " total");
+        if(PsiDie.include_d2) dataset.add(totalRolls_d2List, "Series", " d2");
+        if(PsiDie.include_d4) dataset.add(totalRolls_d4List, "Series", " d4");
+        if(PsiDie.include_d6) dataset.add(totalRolls_d6List, "Series", " d6");
+        if(PsiDie.include_d8) dataset.add(totalRolls_d8List, "Series", " d8");
+        if(PsiDie.include_d10) dataset.add(totalRolls_d10List, "Series", " d10");
+        if(PsiDie.include_d12) dataset.add(totalRolls_d12List, "Series", " d12");
+        if(PsiDie.include_d20) dataset.add(totalRolls_d20List, "Series", " d20");
 
         final CategoryAxis xAxis = new CategoryAxis("Type");
         final NumberAxis yAxis = new NumberAxis("Value");
@@ -65,15 +60,40 @@ public class PsiChartUtils {
         renderer.setDefaultToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
         final CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
 
-        final JFreeChart chart = new JFreeChart("Box-and-Whisker PsiDie", new Font("SansSerif", Font.BOLD,
-                14), plot, false);
+        final JFreeChart chart = new JFreeChart("Box-and-Whisker PsiDie", new Font("SansSerif",
+                Font.BOLD, 14), plot, false);
 
         try {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRollsBox.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfBoxRollsBox.jpg"),
-                    chart, 600, 400);
+                    chart, 1200, 800);
         }catch(IOException ignored) {}
-        //System.out.println("Box Plot created");
+    }
+    public static void ArrayToList(){
+        for (int i = 0; i < PsiDie.totalRolls.length; i++) {
+            totalRollsList.add(PsiDie.totalRolls[i]);
+        }
+        if (PsiDie.include_d20) for (int i = 0; i < PsiDie.totalRolls_d20.length; i++) {
+            totalRolls_d20List.add(PsiDie.totalRolls_d20[i]);
+        }
+        if (PsiDie.include_d12) for (int i = 0; i < PsiDie.totalRolls_d12.length; i++) {
+            totalRolls_d12List.add(PsiDie.totalRolls_d12[i]);
+        }
+        if (PsiDie.include_d10) for (int i = 0; i < PsiDie.totalRolls_d10.length; i++) {
+            totalRolls_d10List.add(PsiDie.totalRolls_d10[i]);
+        }
+        if (PsiDie.include_d8) for (int i = 0; i < PsiDie.totalRolls_d8.length; i++) {
+            totalRolls_d8List.add(PsiDie.totalRolls_d8[i]);
+        }
+        if (PsiDie.include_d6) for (int i = 0; i < PsiDie.totalRolls_d6.length; i++) {
+            totalRolls_d6List.add(PsiDie.totalRolls_d6[i]);
+        }
+        if (PsiDie.include_d4) for (int i = 0; i < PsiDie.totalRolls_d4.length; i++) {
+            totalRolls_d4List.add(PsiDie.totalRolls_d4[i]);
+        }
+        if (PsiDie.include_d2) for (int i = 0; i < PsiDie.totalRolls_d2.length; i++) {
+            totalRolls_d2List.add(PsiDie.totalRolls_d2[i]);
+        }
     }
 }
