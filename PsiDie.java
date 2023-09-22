@@ -1,35 +1,26 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public class PsiDie {
     static int totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
-
     static Random myRand = new Random();
-        static int testRuns = 1_000_000;
+        static int testRuns = 500_000;
     static int[] totalRolls = new int[testRuns], totalRolls_d20 = new int[testRuns],
             totalRolls_d12  = new int[testRuns], totalRolls_d10  = new int[testRuns],
             totalRolls_d8 = new int[testRuns], totalRolls_d6 = new int[testRuns],
             totalRolls_d4 = new int[testRuns], totalRolls_d2 = new int[testRuns], points = new int[testRuns];
         static float trimAmount = 8;
         static int currentFocusPoints = 1;
-        public static int initialDieSize = 20;
+        static int initialDieSize = 20;
         static int psiDie = initialDieSize;
-        static boolean includePoints = false;
-        static boolean include_d20 = true;
-        static boolean include_d12 = true;
-        static boolean include_d10 = true;
-        static boolean include_d8 = true;
-        static boolean include_d6 = true;
-        static boolean include_d4 = true;
-        static boolean include_d2 = true;
-        static boolean increaseDieSize = false;
+        static boolean includePoints = false, increaseDieSize = false;
+        static boolean include_d20 = false, include_d12 = false, include_d10 = false,
+                include_d8 = false, include_d6 = true, include_d4 = true, include_d2 = true;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        if(initialDieSize > 12 && !include_d20) initialDieSize = 12;
+        if(initialDieSize > 12 && !include_d20) initialDieSize = 12; //Makes sure the initial die size is valid
         if(initialDieSize > 10 && !include_d12) initialDieSize = 10;
         if(initialDieSize > 8 && !include_d10) initialDieSize = 8;
         if(initialDieSize > 6 && !include_d8) initialDieSize = 6;
@@ -51,7 +42,6 @@ public class PsiDie {
         System.out.print(".");
         PsiChartUtils.createBoxPlot();
         System.out.print(".");
-
         System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
     }
 

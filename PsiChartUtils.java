@@ -9,7 +9,7 @@ import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
 import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
-import java.awt.*;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +42,7 @@ public class PsiChartUtils {
     }
     public static void createBoxPlot() {
         ArrayToList();
+
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         dataset.add(totalRollsList, "Series", " total");
         if(PsiDie.include_d2) dataset.add(totalRolls_d2List, "Series", " d2");
@@ -68,7 +69,7 @@ public class PsiChartUtils {
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRollsBox.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfBoxRollsBox.jpg"),
                     chart, 1800, 1200);
-        }catch(IOException ignored) {}
+        }catch(IOException ignored) {System.out.println("BoxPlot Exception");}
     }
     public static void ArrayToList(){
         for (int i = 0; i < PsiDie.totalRolls.length; i++) {
