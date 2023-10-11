@@ -1,22 +1,21 @@
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Random;
 
 public class PsiDie {
-    static int totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
+    static short totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
     static Random myRand = new Random();
-        static int testRuns = 500_000;
-    static int[] totalRolls = new int[testRuns], totalRolls_d20 = new int[testRuns],
-            totalRolls_d12  = new int[testRuns], totalRolls_d10  = new int[testRuns],
-            totalRolls_d8 = new int[testRuns], totalRolls_d6 = new int[testRuns],
-            totalRolls_d4 = new int[testRuns], totalRolls_d2 = new int[testRuns], points = new int[testRuns];
-        static float trimAmount = 8;
-        static int currentFocusPoints = 1;
-        static int initialDieSize = 20;
-        static int psiDie = initialDieSize;
-        static boolean includePoints = false, increaseDieSize = false;
-        static boolean include_d20 = false, include_d12 = false, include_d10 = false,
-                include_d8 = false, include_d6 = true, include_d4 = true, include_d2 = true;
+    static int testRuns = 1_000_000;
+    static short[] totalRolls = new short[testRuns], totalRolls_d20 = new short[testRuns],
+            totalRolls_d12  = new short[testRuns], totalRolls_d10  = new short[testRuns],
+            totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns],
+            totalRolls_d4 = new short[testRuns], totalRolls_d2 = new short[testRuns], points = new short[testRuns];
+    static float trimAmount = 8;
+    static byte currentFocusPoints = 1, initialDieSize = 20, psiDie = initialDieSize;
+    static boolean includePoints = false, increaseDieSize = false,
+            include_d20 = true, include_d12 = true, include_d10 = true,
+            include_d8 = true, include_d6 = true, include_d4 = true, include_d2 = true;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();
@@ -32,9 +31,9 @@ public class PsiDie {
         if(include_d4) processResults(totalRolls_d4, "d4");
         if(include_d6) processResults(totalRolls_d6, "d6");
         if(include_d8) processResults(totalRolls_d8, "d8");
-        if(include_d10) processResults(totalRolls_d10, "d10");;
-        if(include_d12) processResults(totalRolls_d12, "d12");;
-        if(include_d20) processResults(totalRolls_d20, "d20");;
+        if(include_d10) processResults(totalRolls_d10, "d10");
+        if(include_d12) processResults(totalRolls_d12, "d12");
+        if(include_d20) processResults(totalRolls_d20, "d20");
         processResults(totalRolls, "Total");
         if(includePoints) processResults(points, "Points");
 
@@ -42,7 +41,7 @@ public class PsiDie {
         System.out.print(".");
         PsiChartUtils.createBoxPlot();
         System.out.print(".");
-        System.out.println((System.nanoTime() - startTime) / 1_000_000_000 + "s");
+        System.out.print((System.nanoTime() - startTime) / 1_000_000_000 + "s");
     }
 
     public static void testDice(){
@@ -95,7 +94,7 @@ public class PsiDie {
         }
     }
     public static void rollDice(boolean includeLowerDie, boolean includeHigherDie){
-        result = myRand.nextInt(psiDie) + 1;
+        result = (short) (myRand.nextInt(psiDie) + 1);
         pointsMade += result;
         totalNumOfRolls++;
         if(result <= currentFocusPoints && includeLowerDie) {
@@ -108,7 +107,7 @@ public class PsiDie {
             if (psiDie == 14) psiDie = 20;
         }
     }
-    public static void processResults(int[] array, String name){
+    public static void processResults(short[] array, String name){
         ArrayUtils.winsorizeArray(array, trimAmount);
         float arrayAverage = ArrayUtils.getArrayAverage(array);
         if (Arrays.equals(array, totalRolls) || Arrays.equals(array, points)){

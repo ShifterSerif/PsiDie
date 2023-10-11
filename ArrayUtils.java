@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class ArrayUtils {
-    public static void winsorizeArray(int[] array, float trimPercent){
+    public static void winsorizeArray(short[] array, float trimPercent){
         Arrays.sort(array);
         int trim = (int)(array.length * (trimPercent / 100));
         int shortenedTrim = trim / 20;
@@ -10,22 +10,26 @@ public class ArrayUtils {
             array[array.length-1-i] = array[array.length-1-trim];
         }
     }
-    public static int getArrayTotal(int[] array) {
-        int total = 0;
-        for(float d : array) {total += (int) d;}
+    public static float getArrayTotal(short[] array) {
+        float total = 0;
+        for(float d : array) {total += d;}
         return total;
     }
-    public static float getArrayAverage(int[] array){return (float) getArrayTotal(array) / array.length;}
-    public static int getArrayMedian(int[] array){
+    public static float getArrayAverage(short[] array){return getArrayTotal(array) / array.length;}
+    public static int getArrayMedian(short[] array){
         if(array.length % 2 == 0){
             return (array[array.length / 2] + array[(array.length / 2) - 1]) / 2;
         } else {
             return array[array.length / 2];
         }
     }
-    public static int getArrayMax(int[] array) {
-        int max = array[0];
+    public static short getArrayMax(short[] array) {
+        short max = array[0];
         for (int i = 1; i < array.length; i++) if (array[i] > max) max = array[i];
         return max;
+    }
+    public static void printArray(short[] array){
+        for (short s : array) System.out.print(s + " ");
+        System.out.println();
     }
 }

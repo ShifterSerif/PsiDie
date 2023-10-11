@@ -15,10 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PsiChartUtils {
-    static ArrayList<Integer> totalRollsList = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(),
+    static ArrayList<Short> totalRollsList = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(),
             totalRolls_d12List = new ArrayList<>(), totalRolls_d10List = new ArrayList<>(),
             totalRolls_d8List = new ArrayList<>(), totalRolls_d6List = new ArrayList<>(),
             totalRolls_d4List = new ArrayList<>(), totalRolls_d2List = new ArrayList<>();
+    static int chartWidth = 1200, chartHeight = 800;
 
     public static void createRollChart(){
         int trimmedLength = (int) (PsiDie.totalRolls.length * (PsiDie.trimAmount/100));
@@ -26,7 +27,7 @@ public class PsiChartUtils {
         for (int i = 0; i < (PsiDie.totalRolls.length - (trimmedLength * 2)); i++) {
             valuesRolls[i] = PsiDie.totalRolls[i + trimmedLength];
         }
-        int numOfBars = 80;
+        int numOfBars = 18;
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         dataset.addSeries("key", valuesRolls, numOfBars);
@@ -37,7 +38,7 @@ public class PsiChartUtils {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRolls.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfRolls.jpg"),
-                    histogram, 1800, 1200);
+                    histogram, chartWidth, chartHeight);
         }catch(IOException ignored) {}
     }
     public static void createBoxPlot() {
@@ -68,7 +69,7 @@ public class PsiChartUtils {
             org.jfree.chart.ChartUtils.saveChartAsPNG(
                     new File("C://Users//Erick Sanchez//Desktop//amountOfRollsBox.jpg"),
                     //new File("C://Users//Shifter//Desktop//amountOfBoxRollsBox.jpg"),
-                    chart, 1800, 1200);
+                    chart, chartWidth, chartHeight);
         }catch(IOException ignored) {System.out.println("BoxPlot Exception");}
     }
     public static void ArrayToList(){
