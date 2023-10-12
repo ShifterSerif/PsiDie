@@ -22,7 +22,7 @@ public class PsiChartUtils {
     static int chartWidth = 1200, chartHeight = 800;
 
     public static void createRollChart(){
-        int trimmedLength = (int) (PsiDie.totalRolls.length * (PsiDie.trimAmount/100));
+        short trimmedLength = (short) (PsiDie.totalRolls.length * (PsiDie.trimAmount/100));
         double[] valuesRolls = new double[(PsiDie.totalRolls.length - (trimmedLength * 2))];
         for (int i = 0; i < (PsiDie.totalRolls.length - (trimmedLength * 2)); i++) {
             valuesRolls[i] = PsiDie.totalRolls[i + trimmedLength];

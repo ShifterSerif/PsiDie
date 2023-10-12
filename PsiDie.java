@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class PsiDie {
     static short totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
-            numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls = 0;
+            numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls;
     static Random myRand = new Random();
-    static int testRuns = 1_000_000;
+    static int testRuns = 2_000_000;
     static short[] totalRolls = new short[testRuns], totalRolls_d20 = new short[testRuns],
             totalRolls_d12  = new short[testRuns], totalRolls_d10  = new short[testRuns],
             totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns],
@@ -39,9 +39,9 @@ public class PsiDie {
 
         PsiChartUtils.createRollChart();
         System.out.print(".");
-        PsiChartUtils.createBoxPlot();
-        System.out.print(".");
-        System.out.print((System.nanoTime() - startTime) / 1_000_000_000 + "s");
+        //PsiChartUtils.createBoxPlot();
+        //System.out.print(".");
+        System.out.print(Math.round((System.nanoTime() - startTime) / 1_000_000f)/1_000f + "s");
     }
 
     public static void testDice(){
@@ -100,7 +100,7 @@ public class PsiDie {
         if(result <= currentFocusPoints && includeLowerDie) {
             psiDie -= 2;
             if(psiDie == 18) psiDie = 12;
-            if(psiDie == 2 && !include_d2) psiDie = 0;
+            else if(psiDie == 2 && !include_d2) psiDie = 0;
         }
         else if(result == psiDie && includeHigherDie && increaseDieSize) {
             psiDie += 2;
@@ -110,11 +110,11 @@ public class PsiDie {
     public static void processResults(short[] array, String name){
         ArrayUtils.winsorizeArray(array, trimAmount);
         float arrayAverage = ArrayUtils.getArrayAverage(array);
-        if (Arrays.equals(array, totalRolls) || Arrays.equals(array, points)){
+        if (name.equals("Total") || name.equals("Points")) {
             System.out.println("-----" + name + " Rolls -----");
             System.out.println("Lowest: " + array[0]);
             System.out.println("Highest: " + array[array.length - 1]);
-            //System.out.println("Mode: " + ListUtils.getListMode(list));
+            //System.out.println("Mode: " + ArrayUtils.getArrayMode(array));
         } else {
             float totalAverage = ArrayUtils.getArrayAverage(totalRolls);
             System.out.println("------" + name + " Rolls ------");

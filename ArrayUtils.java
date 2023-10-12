@@ -32,4 +32,17 @@ public class ArrayUtils {
         for (short s : array) System.out.print(s + " ");
         System.out.println();
     }
+    public static short getArrayMode(short[] array){
+short mode = array[0];
+        int modeCount = 0;
+        for (int i = 0; i < array.length; i++){
+            int count = 0;
+            for (short s : array) if (s == array[i]) count++;
+            if (count > modeCount){
+                modeCount = count;
+                mode = array[i];
+            }
+        }
+        return mode;
+    }
 }
