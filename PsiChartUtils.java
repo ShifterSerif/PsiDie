@@ -22,10 +22,10 @@ public class PsiChartUtils {
     static int chartWidth = 1200, chartHeight = 800;
 
     public static void createRollChart(){
-        short trimmedLength = (short) (PsiDie.totalRolls.length * (PsiDie.trimAmount/100));
-        double[] valuesRolls = new double[(PsiDie.totalRolls.length - (trimmedLength * 2))];
-        for (int i = 0; i < (PsiDie.totalRolls.length - (trimmedLength * 2)); i++) {
-            valuesRolls[i] = PsiDie.totalRolls[i + trimmedLength];
+        short trimmedLength = (short)(PsiDie.testRuns - (PsiDie.trim * 2));
+        double[] valuesRolls = new double[trimmedLength];
+        for (int i = 0; i < trimmedLength; i++) {
+            valuesRolls[i] = PsiDie.totalRolls[i + PsiDie.trim];
         }
         int numOfBars = 18;
         HistogramDataset dataset = new HistogramDataset();
@@ -46,7 +46,7 @@ public class PsiChartUtils {
 
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         dataset.add(totalRollsList, "Series", " total");
-        if(PsiDie.include_d2) dataset.add(totalRolls_d2List, "Series", " d2");
+        dataset.add(totalRolls_d2List, "Series", " d2");
         if(PsiDie.include_d4) dataset.add(totalRolls_d4List, "Series", " d4");
         if(PsiDie.include_d6) dataset.add(totalRolls_d6List, "Series", " d6");
         if(PsiDie.include_d8) dataset.add(totalRolls_d8List, "Series", " d8");
@@ -94,7 +94,7 @@ public class PsiChartUtils {
         if (PsiDie.include_d4) for (int i = 0; i < PsiDie.totalRolls_d4.length; i++) {
             totalRolls_d4List.add(PsiDie.totalRolls_d4[i]);
         }
-        if (PsiDie.include_d2) for (int i = 0; i < PsiDie.totalRolls_d2.length; i++) {
+        for (int i = 0; i < PsiDie.totalRolls_d2.length; i++) {
             totalRolls_d2List.add(PsiDie.totalRolls_d2[i]);
         }
     }

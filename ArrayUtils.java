@@ -1,13 +1,12 @@
 import java.util.Arrays;
 
 public class ArrayUtils {
-    public static void winsorizeArray(short[] array, float trimPercent){
+    public static void winsorizeArray(short[] array){
         Arrays.sort(array);
-        int trim = (int)(array.length * (trimPercent / 100));
-        int shortenedTrim = trim / 20;
-        for(int i = 0; i < trim; i++){
+        int shortenedTrim = PsiDie.trim / 20;
+        for(int i = 0; i < PsiDie.trim; i++){
             if(i < shortenedTrim){array[i] = array[shortenedTrim];}
-            array[array.length-1-i] = array[array.length-1-trim];
+            array[PsiDie.testRuns-1-i] = array[PsiDie.testRuns-1-PsiDie.trim];
         }
     }
     public static float getArrayTotal(short[] array) {
@@ -15,17 +14,11 @@ public class ArrayUtils {
         for(float d : array) {total += d;}
         return total;
     }
-    public static float getArrayAverage(short[] array){return getArrayTotal(array) / array.length;}
-    public static int getArrayMedian(short[] array){
-        if(array.length % 2 == 0){
-            return (array[array.length / 2] + array[(array.length / 2) - 1]) / 2;
-        } else {
-            return array[array.length / 2];
-        }
-    }
+    public static float getArrayAverage(short[] array){ return getArrayTotal(array) / PsiDie.testRuns; }
+    public static int getArrayMedian(short[] array){ return array[PsiDie.testRuns / 2]; }
     public static short getArrayMax(short[] array) {
         short max = array[0];
-        for (int i = 1; i < array.length; i++) if (array[i] > max) max = array[i];
+        for (int i = 1; i < PsiDie.testRuns; i++) if (array[i] > max) max = array[i];
         return max;
     }
     public static void printArray(short[] array){
@@ -33,9 +26,9 @@ public class ArrayUtils {
         System.out.println();
     }
     public static short getArrayMode(short[] array){
-short mode = array[0];
+        short mode = array[0];
         int modeCount = 0;
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < PsiDie.testRuns; i++){
             int count = 0;
             for (short s : array) if (s == array[i]) count++;
             if (count > modeCount){
