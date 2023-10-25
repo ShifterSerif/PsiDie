@@ -3,4 +3,4 @@ out/*
 .vscode/*
 build/*
 *.class
-PsiTest.exe
+*.exe
