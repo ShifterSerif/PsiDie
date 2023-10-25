@@ -1,7 +1,4 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
-
 public class PsiDie {
     static short totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
             numOfRolls_d4, numOfRolls_d2, result, pointsMade, lowestNumOfRolls, highestNumOfRolls;
@@ -12,9 +9,9 @@ public class PsiDie {
             totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns],
             totalRolls_d4 = new short[testRuns], totalRolls_d2 = new short[testRuns], points = new short[testRuns];
     static float trimAmount = 8;
-    static byte currentFocusPoints = 1, initialDieSize = 20, psiDie = initialDieSize;
+    static byte currentFocusPoints = 1, initialDieSize = 8, psiDie = initialDieSize;
     static boolean includePoints = false, increaseDieSize = false,
-            include_d20 = true, include_d12 = true, include_d10 = true,
+            include_d20 = false, include_d12 = false, include_d10 = false,
             include_d8 = true, include_d6 = true, include_d4 = true, include_d2 = true;
 
     public static void main(String[] args) {
@@ -37,10 +34,10 @@ public class PsiDie {
         processResults(totalRolls, "Total");
         if(includePoints) processResults(points, "Points");
 
-        PsiChartUtils.createRollChart();
-        System.out.print(".");
-        //PsiChartUtils.createBoxPlot();
-        //System.out.print(".");
+//        PsiChartUtils.createRollChart();
+//        System.out.print(".");
+//        PsiChartUtils.createBoxPlot();
+//        System.out.print(".");
         System.out.print(Math.round((System.nanoTime() - startTime) / 1_000_000f)/1_000f + "s");
     }
 
@@ -48,34 +45,13 @@ public class PsiDie {
         for (int i = 0; i < testRuns; i++) {
             psiDie = initialDieSize;
             do { switch (psiDie) {
-                    case 20 -> {
-                        numOfRolls_d20++;
-                        rollDice(include_d12, false);
-                    }
-                    case 12 -> {
-                        numOfRolls_d12++;
-                        rollDice(include_d10, include_d20);
-                    }
-                    case 10 -> {
-                        numOfRolls_d10++;
-                        rollDice(include_d8, include_d12);
-                    }
-                    case 8 -> {
-                        numOfRolls_d8++;
-                        rollDice(include_d6, include_d10);
-                    }
-                    case 6 -> {
-                        numOfRolls_d6++;
-                        rollDice(include_d4, include_d8);
-                    }
-                    case 4 -> {
-                        numOfRolls_d4++;
-                        rollDice(true, include_d6);
-                    }
-                    case 2 -> {
-                        numOfRolls_d2++;
-                        rollDice(true, include_d4);
-                    }
+                    case 20 -> { numOfRolls_d20++; rollDice(include_d12, false); }
+                    case 12 -> { numOfRolls_d12++; rollDice(include_d10, include_d20); }
+                    case 10 -> { numOfRolls_d10++; rollDice(include_d8, include_d12); }
+                    case 8 -> { numOfRolls_d8++; rollDice(include_d6, include_d10); }
+                    case 6 -> { numOfRolls_d6++; rollDice(include_d4, include_d8); }
+                    case 4 -> { numOfRolls_d4++; rollDice(true, include_d6); }
+                    case 2 -> { numOfRolls_d2++; rollDice(true, include_d4); }
                     default -> System.out.println(psiDie);
                 } } while (psiDie > 0);
             totalRolls[i] = totalNumOfRolls;
@@ -88,7 +64,7 @@ public class PsiDie {
             if (include_d2) totalRolls_d2[i] = numOfRolls_d2;
             if (includePoints) points[i] = pointsMade;
             if (totalNumOfRolls < lowestNumOfRolls) lowestNumOfRolls = totalNumOfRolls;
-            if (totalNumOfRolls > highestNumOfRolls) highestNumOfRolls = totalNumOfRolls;
+            else if (totalNumOfRolls > highestNumOfRolls) highestNumOfRolls = totalNumOfRolls;
             totalNumOfRolls = pointsMade = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 =
                     numOfRolls_d6 = numOfRolls_d4 = numOfRolls_d2 = 0;
         }

@@ -1,2 +1,6 @@
 out/*
 *.xml
+.vscode/*
+build/*
+*.class
+PsiTest.exe
