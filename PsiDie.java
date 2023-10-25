@@ -1,7 +1,6 @@
 import java.util.Random;
 public class PsiDie {
-    static short totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6,
-            numOfRolls_d4, numOfRolls_d2, result, pointsRolled;
+    static short totalNumOfRolls, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4, numOfRolls_d2, result, pointsRolled;
     static Random myRand = new Random();
     static int testRuns = 2_500_000;
     static short[] totalRolls = new short[testRuns], totalRolls_d20 = new short[testRuns], totalRolls_d12  = new short[testRuns], totalRolls_d10  = new short[testRuns], totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns], totalRolls_d4 = new short[testRuns], totalRolls_d2 = new short[testRuns], points = new short[testRuns];
@@ -28,14 +27,12 @@ public class PsiDie {
         System.out.print(Math.round((System.nanoTime() - startTime) / 1_000_000)/1_000f + "s");
     }
     public static void initializeDieSize(){
-        switch (initialDieSize) {
-            case 20 -> { include_d20 = true; include_d12 = true; include_d10 = true; include_d8 = true; include_d6 = true; include_d4 = true; } 
-            case 12 -> { include_d12 = true; include_d10 = true; include_d8 = true; include_d6 = true; include_d4 = true; }
-            case 10 -> { include_d10 = true; include_d8 = true; include_d6 = true; include_d4 = true; }
-            case 8 -> { include_d8 = true; include_d6 = true; include_d4 = true; }
-            case 6 -> { include_d6 = true; include_d4 = true; }
-            case 4 -> include_d4 = true;
-            default -> System.out.println("Invalid initial die size"); }
+        include_d20 = initialDieSize >= 20;
+        include_d12 = initialDieSize >= 12;
+        include_d10 = initialDieSize >= 10;
+        include_d8 = initialDieSize >= 8;
+        include_d6 = initialDieSize >= 6;
+        include_d4 = initialDieSize >= 4;
     }
     public static void testDice(){
         for (int i = 0; i < testRuns; i++) {
