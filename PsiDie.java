@@ -1,15 +1,16 @@
 import java.util.Random;
+// find out if there is a way to make an array or something that makes it so you can easily add new dice to the program
+// just a one stop shop that makes new arrays, maybe booleans
 public class PsiDie {
-    static short totalNumOfRolls, numOfRolls_d100, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4, numOfRolls_d2, result, pointsRolled;
+    static short totalNumOfRolls, numOfRolls_d100, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4, numOfRolls_d2, pointsRolled;
     static Random myRand = new Random();
     static int testRuns = 2_500_000;
     static short[] totalRolls = new short[testRuns], totalRolls_d100 = new short[testRuns], totalRolls_d20 = new short[testRuns], totalRolls_d12  = new short[testRuns], totalRolls_d10  = new short[testRuns], totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns], totalRolls_d4 = new short[testRuns], totalRolls_d2 = new short[testRuns], points = new short[testRuns];
     static short trim = (short)(testRuns * 0.08);
-    static byte currentFocusPoints = 1, psiDie, initialDieSize = 12;
-    static boolean includePoints = false, increaseDieSize = false, include_d100, include_d20, include_d12, include_d10, include_d8, include_d6, include_d4;
+    static byte currentFocusPoints = 2, result, psiDie, initialDieSize = 12;
+    static boolean showPoints = false, increaseDieSize = false, include_d100 = initialDieSize >= 100, include_d20 = initialDieSize >= 20, include_d12 = initialDieSize >= 12,  include_d10 = initialDieSize >= 10, include_d8 = initialDieSize >= 8, include_d6 = initialDieSize >= 6, include_d4 = initialDieSize >= 4;
     public static void main(String[] args) {
         long startTime = System.nanoTime();
-        initializeDieSize();
         testDice();
         processResults(totalRolls_d2, "d2");
         if(include_d4) processResults(totalRolls_d4, "d4");
@@ -20,33 +21,25 @@ public class PsiDie {
         if(include_d20) processResults(totalRolls_d20, "d20");
         if(include_d100) processResults(totalRolls_d100, "d100");
         processResults(totalRolls, "Total");
-        if(includePoints) processResults(points, "Points");
+        if(showPoints) processResults(points, "Points");
         // PsiChartUtils.createRollChart();
         // System.out.print(".");
         // PsiChartUtils.createBoxPlot();
         // System.out.print(".");
         System.out.print(Math.round((System.nanoTime() - startTime) / 1_000_000)/1_000f + "s");
     }
-    public static void initializeDieSize(){
-        include_d100 = initialDieSize >= 100;
-        include_d20 = initialDieSize >= 20;
-        include_d12 = initialDieSize >= 12;
-        include_d10 = initialDieSize >= 10;
-        include_d8 = initialDieSize >= 8;
-        include_d6 = initialDieSize >= 6;
-        include_d4 = initialDieSize >= 4;
-    }
     public static void testDice(){
         for (int i = 0; i < testRuns; i++) {
             psiDie = initialDieSize;
             do { switch (psiDie) {
                     case 100 -> { numOfRolls_d100++; rollDice(false);
-                        if(psiDie == 98) psiDie = 20; }
+                        if (psiDie < 100) psiDie = 20; }
                     case 20 -> { numOfRolls_d20++; rollDice(include_d100); 
-                        if(psiDie == 18) psiDie = 12;
-                        else if(psiDie == 22) psiDie = 100; }
+                        if (psiDie != 20){
+                            if (psiDie < 20) psiDie = 12;
+                            else psiDie = 100; } }
                     case 12 -> { numOfRolls_d12++; rollDice(include_d20);
-                        if (psiDie == 14) psiDie = 20; }
+                        if (psiDie > 12) psiDie = 20; }
                     case 10 -> { numOfRolls_d10++; rollDice(include_d12); }
                     case 8 -> { numOfRolls_d8++; rollDice(include_d10); }
                     case 6 -> { numOfRolls_d6++; rollDice(include_d8); }
@@ -55,24 +48,24 @@ public class PsiDie {
                     default -> System.out.println(psiDie);
                 } } while (psiDie > 0);
             totalRolls[i] = totalNumOfRolls;
-            if (include_d20) totalRolls_d20[i] = numOfRolls_d20;
-            if (include_d12) totalRolls_d12[i] = numOfRolls_d12;
-            if (include_d10) totalRolls_d10[i] = numOfRolls_d10;
-            if (include_d8) totalRolls_d8[i] = numOfRolls_d8;
-            if (include_d6) totalRolls_d6[i] = numOfRolls_d6;
-            if (include_d4) totalRolls_d4[i] = numOfRolls_d4;
+            totalRolls_d100[i] = numOfRolls_d100;
+            totalRolls_d20[i] = numOfRolls_d20;
+            totalRolls_d12[i] = numOfRolls_d12;
+            totalRolls_d10[i] = numOfRolls_d10;
+            totalRolls_d8[i] = numOfRolls_d8;
+            totalRolls_d6[i] = numOfRolls_d6;
+            totalRolls_d4[i] = numOfRolls_d4;
             totalRolls_d2[i] = numOfRolls_d2;
-            if (includePoints) points[i] = pointsRolled;
-            totalNumOfRolls = pointsRolled = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 =
-                    numOfRolls_d6 = numOfRolls_d4 = numOfRolls_d2 = 0;
+            points[i] = pointsRolled;
+            totalNumOfRolls = pointsRolled = numOfRolls_d100 = numOfRolls_d20 = numOfRolls_d12 = numOfRolls_d10 = numOfRolls_d8 = numOfRolls_d6 = numOfRolls_d4 = numOfRolls_d2 = 0;
         }
-    }
+    };
     public static void rollDice(boolean includeHigherDie){
-        result = (short) (myRand.nextInt(psiDie) + 1);
-        if (includePoints) pointsRolled += result;
+        result = (byte) (myRand.nextInt(psiDie) + 1);
+        pointsRolled += result;
         totalNumOfRolls++;
-        if(result <= currentFocusPoints) { psiDie -= 2; }
-        else if(increaseDieSize && includeHigherDie && result == psiDie) { psiDie += 2; }
+        if(result <= currentFocusPoints) psiDie -= 2;
+        else if(increaseDieSize && includeHigherDie && result == psiDie) psiDie += 2;
     }
     public static void processResults(short[] array, String name){
         ArrayUtils.winsorizeArray(array);
