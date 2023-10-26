@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PsiChartUtils {
+public class ChartUtils {
     static ArrayList<Short> totalRollsList = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(),
             totalRolls_d12List = new ArrayList<>(), totalRolls_d10List = new ArrayList<>(),
             totalRolls_d8List = new ArrayList<>(), totalRolls_d6List = new ArrayList<>(),
