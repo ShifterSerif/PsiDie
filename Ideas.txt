@@ -10,7 +10,15 @@ Magic Missile-like where you can choose how many actions to use to roll the psi 
 Add a reaction?
 Follows fibonacci sequence?
 Give bonus equal to number of psi die? d2 = 1, d4 = 2, d6 = 3, d8 = 4, d10 = 5, d12 = 6, d20 = 10
-Add d100 to see the insanity
+
+1: 2
+2: 4
+3-4: 6
+5-7: 8
+8-12: 10
+13-20: 12
+21-33: 20
+34-54: 100
 
 
 Prerequisite: You must be a Psychic

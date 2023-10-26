@@ -15,7 +15,7 @@ public class ArrayUtils {
         for(short d : array) {total += d;}
         return total;
     }
-    public static float getArrayAverage(short[] array){ return getArrayTotal(array) / PsiDie.testRuns; }
+    public static double getArrayAverage(short[] array){ return getArrayTotal(array) / PsiDie.testRuns; }
     public static int getArrayMedian(short[] array){ return array[PsiDie.testRuns / 2]; }
     public static short getArrayMax(short[] array) {
         short max = array[0];
