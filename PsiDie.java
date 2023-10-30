@@ -1,14 +1,17 @@
 import java.util.Random;
 // find out if there is a way to make an array or something that makes it so you can easily add new dice to the program
 // just a one stop shop that makes new arrays, maybe booleans
+// check out Cobertura to see how many steps for optimization purposes
 public class PsiDie {
     static short totalNumOfRolls, numOfRolls_d100, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4, numOfRolls_d2, pointsRolled;
     static Random myRand = new Random();
     static int testRuns = 2_500_000;
     static short[] totalRolls = new short[testRuns], totalRolls_d100 = new short[testRuns], totalRolls_d20 = new short[testRuns], totalRolls_d12  = new short[testRuns], totalRolls_d10  = new short[testRuns], totalRolls_d8 = new short[testRuns], totalRolls_d6 = new short[testRuns], totalRolls_d4 = new short[testRuns], totalRolls_d2 = new short[testRuns], points = new short[testRuns];
-    static short trim = (short)(testRuns * 0.08);
-    static byte currentFocusPoints = 2, result, psiDie, initialDieSize = 12;
-    static boolean showPoints = false, increaseDieSize = false, include_d100 = initialDieSize >= 100, include_d20 = initialDieSize >= 20, include_d12 = initialDieSize >= 12,  include_d10 = initialDieSize >= 10, include_d8 = initialDieSize >= 8, include_d6 = initialDieSize >= 6, include_d4 = initialDieSize >= 4;
+    static int trim = (int) (testRuns * 0.02);
+    static byte currentFocusPoints = 1, result, psiDie, initialDieSize = 12;
+    static boolean showPoints = false, increaseDieSize = false, include_d100 = initialDieSize >= 100, 
+    include_d20 = initialDieSize >= 20, include_d12 = initialDieSize >= 12, include_d10 = initialDieSize >= 10, 
+    include_d8 = initialDieSize >= 8, include_d6 = initialDieSize >= 6, include_d4 = initialDieSize >= 4;
     public static void main(String[] args) {
         long startTime = System.nanoTime();
         testDice();
@@ -22,9 +25,9 @@ public class PsiDie {
         if(include_d100) processResults(totalRolls_d100, "d100");
         processResults(totalRolls, "Total");
         if(showPoints) processResults(points, "Points");
-        // PsiChartUtils.createRollChart();
+        // ChartUtils.createRollChart();
         // System.out.print(".");
-        // PsiChartUtils.createBoxPlot();
+        // ChartUtils.createBoxPlot();
         // System.out.print(".");
         System.out.print(Math.round((System.nanoTime() - startTime) / 1_000_000)/1_000f + "s");
     }
@@ -74,7 +77,8 @@ public class PsiDie {
             System.out.println("-----" + name + " Rolls -----");
             System.out.println("Lowest: " + array[0]);
             System.out.println("Highest: " + array[testRuns - 1]);
-            //System.out.println("Mode: " + ArrayUtils.getArrayMode(array));
+            // System.out.println("Mode: " + ArrayUtils.getArrayMode(array));
+            // System.out.println("Range: " + ArrayUtils.getArrayRange(array));
         } else {
             double totalAverage = ArrayUtils.getArrayAverage(totalRolls);
             System.out.println("------" + name + " Rolls ------");

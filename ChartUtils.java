@@ -15,19 +15,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChartUtils {
-    static ArrayList<Short> totalRollsList = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(),
-            totalRolls_d12List = new ArrayList<>(), totalRolls_d10List = new ArrayList<>(),
-            totalRolls_d8List = new ArrayList<>(), totalRolls_d6List = new ArrayList<>(),
-            totalRolls_d4List = new ArrayList<>(), totalRolls_d2List = new ArrayList<>();
+    static ArrayList<Short> totalRollsList = new ArrayList<>(), totalRolls_d100List = new ArrayList<>(), totalRolls_d20List = new ArrayList<>(), totalRolls_d12List = new ArrayList<>(), totalRolls_d10List = new ArrayList<>(), totalRolls_d8List = new ArrayList<>(), totalRolls_d6List = new ArrayList<>(), totalRolls_d4List = new ArrayList<>(), totalRolls_d2List = new ArrayList<>();
     static int chartWidth = 1200, chartHeight = 800;
-
+    
     public static void createRollChart(){
-        short trimmedLength = (short)(PsiDie.testRuns - (PsiDie.trim * 2));
-        double[] valuesRolls = new double[trimmedLength];
-        for (int i = 0; i < trimmedLength; i++) {
-            valuesRolls[i] = PsiDie.totalRolls[i + PsiDie.trim];
-        }
-        int numOfBars = 18;
+        double[] valuesRolls = new double[PsiDie.testRuns];
+        for (int i = 0; i < PsiDie.testRuns-1; i++) { valuesRolls[i] = PsiDie.totalRolls[i]; }        
+        int numOfBars = 18 * 4;
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
         dataset.addSeries("key", valuesRolls, numOfBars);
@@ -43,7 +37,7 @@ public class ChartUtils {
     }
     public static void createBoxPlot() {
         ArrayToList();
-
+        
         final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         dataset.add(totalRollsList, "Series", " total");
         dataset.add(totalRolls_d2List, "Series", " d2");
@@ -53,6 +47,7 @@ public class ChartUtils {
         if(PsiDie.include_d10) dataset.add(totalRolls_d10List, "Series", " d10");
         if(PsiDie.include_d12) dataset.add(totalRolls_d12List, "Series", " d12");
         if(PsiDie.include_d20) dataset.add(totalRolls_d20List, "Series", " d20");
+        if(PsiDie.include_d100) dataset.add(totalRolls_d100List, "Series", " d100");
 
         final CategoryAxis xAxis = new CategoryAxis("Type");
         final NumberAxis yAxis = new NumberAxis("Value");
@@ -75,6 +70,9 @@ public class ChartUtils {
     public static void ArrayToList(){
         for (int i = 0; i < PsiDie.totalRolls.length; i++) {
             totalRollsList.add(PsiDie.totalRolls[i]);
+        }
+        if (PsiDie.include_d100) for (int i = 0; i < PsiDie.totalRolls_d100.length; i++) {
+            totalRolls_d100List.add(PsiDie.totalRolls_d100[i]);
         }
         if (PsiDie.include_d20) for (int i = 0; i < PsiDie.totalRolls_d20.length; i++) {
             totalRolls_d20List.add(PsiDie.totalRolls_d20[i]);
