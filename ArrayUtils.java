@@ -2,9 +2,9 @@ import java.util.Arrays;
 public class ArrayUtils {
     public static void winsorizeArray(short[] array){
         Arrays.sort(array);
-        short lowerTrimValue = array[PsiDie.trim];
-        short upperTrimValue = array[PsiDie.testRuns-1-PsiDie.trim];
-        for(int i = 0; i < PsiDie.trim; i++){
+        short lowerTrimValue = array[PsiDie.trimmedLength];
+        short upperTrimValue = array[PsiDie.testRuns-1-PsiDie.trimmedLength];
+        for(int i = 0; i < PsiDie.trimmedLength; i++){
             array[i] = lowerTrimValue;
             array[PsiDie.testRuns-1-i] = upperTrimValue;
         }

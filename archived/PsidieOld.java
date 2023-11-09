@@ -124,7 +124,7 @@ public class PsidieOld {
         // remove 25% of top and bottom and find mean for result
         trimAveragePoints();
 
-        // trim 25% of top and bottom to remove outliers and find median for pointsList
+        // trimmedLength 25% of top and bottom to remove outliers and find median for pointsList
         trimMedianPoints();
 
         //create chart for rolls

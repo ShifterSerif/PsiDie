@@ -87,12 +87,12 @@ double getArrayAverage(short array[]){
 
 void winsorizeArray(short array[]){
     std::sort(array, array + testRuns);
-    int trim = testRuns * (trimAmount / 100);
+    int trimmedLength = testRuns * (trimAmount / 100);
     int shortenedTrim = trimAmount / 20;
     for(int i = 0; i < (testRuns*trimAmount)/100; i++){
         // array[i] = array[static_cast<int>((testRuns*trimAmount)/100)];
         if(i < shortenedTrim){array[i] = array[shortenedTrim];}
-        array[testRuns - i - 1] = array[testRuns - trim - 1];
+        array[testRuns - i - 1] = array[testRuns - trimmedLength - 1];
     }
 }
 
