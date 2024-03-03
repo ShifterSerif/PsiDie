@@ -1,5 +1,4 @@
 import java.util.Random;
-// check out Cobertura to see how many steps for optimization purposes
 public class PsiDie {
     static short totalNumOfRolls, numOfRolls_d100, numOfRolls_d20, numOfRolls_d12, numOfRolls_d10, numOfRolls_d8, numOfRolls_d6, numOfRolls_d4, numOfRolls_d2, pointsRolled;
     static Random myRand = new Random();
